@@ -33,7 +33,7 @@ class Taman{
     pushMatrix();
      beginShape();
      noStroke();
-     fill(#552F12);
+     fill(60);
      vertex(0,340);
      vertex(1280,340); 
      vertex(1280,460);
@@ -58,27 +58,45 @@ class Taman{
   }
   void rumput(){
     pushMatrix();
-    fill(#69c722);
+    
     popMatrix();
   }
+
+  //rencana dirumah nanti kalo sempat jadi fungsi jadinya manggil 3 fungsi langsung
   void semaksemak(){
-    //dibungkus pake quad
+    //dibungkus pake quad    
     pushMatrix();
-      semak(90, 260, 60);
-      semak(120, 240, 75);
-      semak(150, 235, 75);
-      semak(190, 253, 75);
-      quad(110,257,
-      163,249,
-      181,290,
-      94,290);
+      fill(#5BB318);
+      circle(90, 210+50, 60);
+      circle(120, 190+50, 60+15);
+      circle(150, 185+50, 60+15);
+      circle(180, 205+50, 60+10);
+      quad(110,210+50,
+      165,200+50,
+      180,240+50,
+      95,240+50);
     popMatrix();
-  }
-  void semak(int x, int y, int luas){
     pushMatrix();
-    fill(#5BB318);
-    circle(x,y,luas);
-    circle(x,y,luas);
+      fill(#69c722);
+      circle(90-100, 210+50, 60);
+      circle(120-100, 190+50, 60+15);
+      circle(150-100, 185+50, 60+15);
+      circle(180-100, 205+50, 60+10);
+      quad(110-100,210+50,
+      165-100,200+50,
+      180-100,240+50,
+      95-100,240+50);
+    popMatrix();
+    pushMatrix();
+      fill(#69c722);
+      circle(90+75, 210+50, 60);
+      circle(120+75, 190+50, 60+15);
+      circle(150+75, 185+50, 60+15);
+      circle(180+75, 205+50, 60+10);
+      quad(110+75,210+50,
+      165+75,200+50,
+      180+75,240+50,
+      95+75,240+50);
     popMatrix();
   }
 }

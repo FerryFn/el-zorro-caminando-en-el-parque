@@ -8,7 +8,7 @@ void setup() {
 
 void draw() {
   //background(#A4DFFA);
-  background(#87cefa);
+  background(#552F12);
   //menu.display();
   taman.begin();
 }
