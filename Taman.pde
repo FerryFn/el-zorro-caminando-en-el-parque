@@ -1,32 +1,51 @@
 //boolean tamandimulai = false;
 
 class Taman{
+  Fox fox;
   Hujan[] hujan;
+  
+  color bush1 = #4C8F4F;
+  color bush2 = #36784E;
+  color fence = #352E3D; 
+  color lampLight = #FCC88D;
+  color lampStructure = #24222E;
+  color path = #5A5A70;
+  color sky1 = #AFCFC2;
+  color treeTrunk = #844344;
+  color treeBackdrop1 = #2D434D;
+  color treeBackdrop2 = #385450;
+  color water = #6A8A99;
 
-  public Taman(Hujan[] hjn) {
+  public Taman(Fox tempFox, Hujan[] hjn) {
+    fox = tempFox;
     hujan = hjn;
   }
 
   void begin(){
+      boundaryControl();
+      layerControl();
     
+      background(#7CAB6D);
+      langit();
+      
     //if (tamandimulai == true){
       hujan();
       jalanan(); 
 
 
       push();
-        fill(#B2FCFF);
+        fill(water);
         ellipse(440, 540, 300, 100);
         ellipse(470, 580, 200, 100);
         ellipse(570, 530, 200, 100);
       pop();
 
       
-      batangPohonKecil(200,-250,#876445,0.5);
-      batangPohonKecil(600,-250,#876445,0.5); 
-      batangPohonKecil(800,-250,#876445,0.5);
+      batangPohonKecil(200,-250,treeTrunk,0.5);
+      batangPohonKecil(600,-250,treeTrunk,0.5); 
+      batangPohonKecil(800,-250,treeTrunk,0.5);
       push();
-        fill(#5BB318);
+        fill(bush2);
         ellipse(40, 30, 100, 100);
         ellipse(70, 30, 100, 100);
         ellipse(110, 50, 100, 100);
@@ -40,19 +59,19 @@ class Taman{
         ellipse(430, 30, 120, 100);
       pop();
       
-      semak(160,-40,#5BB318,1);
-      semak(200,-40,#5BB318,1);
-      semak(-20,-35,#5BB318,1);
-      semak(20,-35,#5BB318,1);
-      semak(280,-35,#69c722,1);
-      semak(60,-30,#69c722,1);
-      semak(100,-30,#69c722,1);
-      semak(-100,-30,#69c722,1);
+      semak(160,-40,0,bush2,1);
+      semak(200,-40,0,bush2,1);
+      semak(-20,-35,0,bush2,1);
+      semak(20,-35,0,bush2,1);
+      semak(280,-35,0,bush1,1);
+      semak(60,-30,0,bush1,1);
+      semak(100,-30,0,bush1,1);
+      semak(-100,-30,0,bush1,1);
 
-      batangPohonKecil(1450,-260,#876445,0.5); 
-      batangPohonKecil(1750,-280,#876445,0.5);
+      batangPohonKecil(1450,-260,treeTrunk,0.5); 
+      batangPohonKecil(1750,-280,treeTrunk,0.5);
       push();
-        fill(#5BB318);
+        fill(bush2);
         ellipse(700, 30, 100, 100);
         ellipse(740, 40, 100, 100);
         ellipse(780, 30, 100, 100);
@@ -61,38 +80,54 @@ class Taman{
         ellipse(900, 40, 100, 100);
         ellipse(920, 30, 100, 100);
       pop(); 
-      semak(600, -80,#5BB318,1);
-      semak(520, -80,#69c722,1);
-      semak(680, -80,#69c722,1);
-      semak(720, -80,#69c722,1);
+      semak(600, -80,0,bush2,1);
+      semak(520, -80,0,bush1,1);
+      semak(680, -80,0,bush1,1);
+      semak(720, -80,0,bush1,1);
 
-      semak(-180, 150,#69c722,2);
-      semak(-140, 150,#69c722,2);
+      semak(-180, 150,9,bush1,2);
+      semak(-140, 150,9,bush1,2);
 
       pagar(0,0);
 
-      lampu(50,500,1);
-      lampu(500,320,1);
+      lampu(500,320, 3);
+      lampu(50,500, 5);
 
-      semak(950, 60,#5BB318,2);
-      semak(800, 60,#69c722,2);
+      semak(950, 60,7,bush2,2);
+      semak(800, 60,7,bush1,2);
 
-      batangPohonBesar(1100,-210,#876445,1);
-      pushMatrix();
-        fill(#876445);
-        quad(1070, 240, 950, 110, 980, 110, 1070, 170);
-      popMatrix();
+      batangPohonBesar(1100,-210,7,treeTrunk,1);
       push();
-        fill(#5BB318);
+        translate(0, 0, 8);
+        fill(treeTrunk);
+        quad(1070, 240, 950, 110, 980, 110, 1070, 170);
+        fill(bush1);
         ellipse(970, 50, 200, 200);
         ellipse(1070, 25, 200, 200);
         ellipse(1170, 60, 200, 200);
         ellipse(1230, 60, 200, 200);
       pop();
-      sign(0,0);
+      sign(0,0,3);
     //} else {
       
     //}
+  }
+  
+  void langit() {
+    push();
+      noStroke();
+      fill(sky1);
+      rect(0, 0, width, 200);
+      fill(treeBackdrop1);
+      for (int i = 0; i <= width / 30; i++) {
+        arc(i * width / 30, 200, 60, 60, PI, TWO_PI);
+      }
+      
+      for (int i = 0; i < 10; i++) {
+        arc(i * width / 30, 200, 100, 100, PI, TWO_PI);
+      }
+        
+    pop(); 
   }
 
   void hujan(){
@@ -105,7 +140,7 @@ class Taman{
     pushMatrix();
      beginShape();
      noStroke();
-     fill(60);
+     fill(path);
      vertex(0,340);
      vertex(1280,340); 
      vertex(1280,460);
@@ -115,10 +150,10 @@ class Taman{
   }
 
   //rencana dirumah nanti kalo sempat jadi fungsi jadinya manggil 3 fungsi langsung
-  void semak(int x, int y, color g, float scale){
+  void semak(int x, int y, int z, color g, float scale){
     //dibungkus pake quad    
     pushMatrix();
-      translate(x,y);
+      translate(x,y,z);
       scale(scale);
       fill(g);
       circle(90, 260, 60);
@@ -152,10 +187,10 @@ class Taman{
     popMatrix();
   }
 
-  void batangPohonBesar(int x, int y, color b, float scale){
+  void batangPohonBesar(int x, int y, int z, color b, float scale){
     pushMatrix();
       scale(scale);
-      translate(x,y);
+      translate(x,y,z);
       fill(b);
       //pohon kanan
       beginShape();
@@ -176,7 +211,7 @@ class Taman{
     push();
       translate(x, y);
       strokeWeight(10);
-      stroke(#1B2430);
+      stroke(fence);
       for (int i = 0; i < 14; i++) {
         line(20 * i + 20 * i, 170, 20 * i + 20 * i, 270);
       }
@@ -184,28 +219,34 @@ class Taman{
       //   line(i, 170, i, 270);
       // }
       line(0, 170, 525, 170);
-      line(0, 270, 525, 270);
+      line(0, 250, 525, 250);
     pop();
   }
 
   void lampu(int x, int y, int z){
     push();
       translate(x,y,z);
-      stroke(#0F0E0E);
+      stroke(lampStructure);
       strokeWeight(15);
       line(0, 0, 0, -180);
       strokeWeight(4);
       rectMode(CENTER);
-      fill(#0F0E0E);
+      fill(lampStructure);
       rect(0, -200, 40, 60, 20);
-      fill(#FFFF00);
+      fill(lampLight);
       rect(0, -200, 20, 40, 10);
     pop();
+    
+    if (fox.posY >= y && fox.posZ <= z) {
+      fox.posZ = z + 1;
+    } else if (fox.posY < y && fox.posZ > z) {
+      fox.posZ = z - 1;
+    }
   }
 
-  void sign(int x, int y){
+  void sign(int x, int y, int z){
     push();
-      translate(x,y);
+      translate(x,y,z);
       pushMatrix();
       fill(#DEB887);
       rect(690, 275, 20, 60);
@@ -225,5 +266,52 @@ class Taman{
       rectMode(CENTER);
       popMatrix();
     pop();
+  }
+  
+  // For controlling which object is in front of other objects
+  void layerControl() {
+    // Sign layer control
+    if (fox.posY >= 300 && fox.posZ <= 3) {
+      fox.posZ = 4;
+    } else if (fox.posY < 325 && fox.posZ > 3) {
+      fox.posZ = 2;
+    }
+    
+    // Front tree and bushes layer control
+    if (fox.posY >= 620 && fox.posZ <= 7) {
+      fox.posZ = 8;
+    } else if (fox.posY < 630 && fox.posZ > 7) {
+      fox.posZ = 6;
+    }
+  }
+  
+  // For controlling areas that isn't passable by the Fox
+  void boundaryControl() {
+    if (fox.posY <= 275 && fox.posX <= 555 && (keyCode == LEFT || keyCode == UP)) {
+      // Top left boundary
+      fox.stopWalk();
+    } else if ((fox.posY <= 220 && keyCode == UP) || (fox.posY >= height - 50 && keyCode == DOWN)) {
+      // Canvas boundary vertically
+      fox.stopWalk();
+    } else if ((fox.posX <= 50 && keyCode == LEFT) || (fox.posX >= width - 50 && keyCode == RIGHT)) {
+      // Canvas boundary horizontally
+      fox.stopWalk();
+    } else if (((fox.posX >= 620 && keyCode == RIGHT) && fox.posX < 920 && fox.posY < 340 && fox.posY > 300) ||
+      (fox.posX > 650 && (fox.posX <= 920 && keyCode == LEFT) && fox.posY < 340 && fox.posY > 300) ||
+      (fox.posX > 650 && fox.posX < 920 && (fox.posY <= 340 && keyCode == UP) && fox.posY > 300) ||
+      (fox.posX > 650 && fox.posX < 920 && fox.posY < 330 && (fox.posY >= 300 && keyCode == DOWN))) {
+      // Sign boundary
+      fox.stopWalk();
+    } else if (((fox.posX >= 915 && keyCode == RIGHT) && fox.posY < 650 && fox.posY > 590) ||
+      (fox.posX > 925 && (fox.posY <= 655 && keyCode == UP) && fox.posY > 590) ||
+      (fox.posX > 925 && fox.posY < 650 && (fox.posY >= 585 && keyCode == DOWN))) {
+      // Front bush boundary
+      fox.stopWalk();
+    } else if ((fox.posX >= 1010 && keyCode == RIGHT) && fox.posY >= 590) {
+      // Front tree boundary
+      fox.stopWalk();
+    } else {
+      fox.speed = fox.defaultSpeed;
+    }
   }
 }

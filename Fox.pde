@@ -8,12 +8,13 @@ class Fox {
 
   // Variabel pengatur rubah
   int speed = 4;
+  int defaultSpeed = 4;
   boolean isFacingRight = true;
 
   // Variabel untuk posisi rubah pada kanvas
   int posX = 0;
   int posY = 0;
-  int posZ = 0;
+  int posZ = 2;
   String currentState = STATES[1];
   
   // Variabel untuk posisi rubah tanpa mengubah posisi aslinya
@@ -83,6 +84,11 @@ class Fox {
       currentState = STATES[0];
     }
   }
+  
+  // Menghentikan posisi jalan rubah
+  void stopWalk() {
+    speed = 0;
+  }
 
   // Menampilkan rubah sesuai state
   void display() {
@@ -128,30 +134,6 @@ class Fox {
       }
     }
     popMatrix();
-  }
-  
-  // Stauts: duduk
-  void sitting() {
-    pushMatrix();
-    {
-      translate(0, relativePosY, 0);
-      _body();
-
-      // Menggeser kepala, dan animasi menggerakkan kepala
-      pushMatrix();
-      {
-        translate(0, -120);
-        rotate(radians(headRadians));
-        _head();
-      }
-      popMatrix();
-    }
-    popMatrix();
-
-    rightLegRotate = -60;
-    leftLegRotate = -60;
-    relativePosY = 40;
-    _idleController();
   }
 
   // Animasi berkedip
@@ -349,7 +331,32 @@ class Fox {
       }
     }
   }
+  
+  // Status: duduk
+  void sitting() {
+    pushMatrix();
+    {
+      translate(0, relativePosY, 0);
+      _body();
 
+      // Menggeser kepala, dan animasi menggerakkan kepala
+      pushMatrix();
+      {
+        translate(0, -120);
+        rotate(radians(headRadians));
+        _head();
+      }
+      popMatrix();
+    }
+    popMatrix();
+
+    rightLegRotate = -60;
+    leftLegRotate = -60;
+    relativePosY = 40;
+    _idleController();
+  }
+  
+  // Badan
   private void _body() {
     noStroke();
 
