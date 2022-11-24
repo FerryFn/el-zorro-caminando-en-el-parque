@@ -10,5 +10,10 @@ void draw() {
   //background(#A4DFFA);
   background(#552F12);
   //menu.display();
+  
+  
   taman.begin();
+  fill(0);
+  text( "x: " + mouseX + " y: " + mouseY, mouseX, mouseY);
+  textSize(20);
 }
