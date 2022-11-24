@@ -1,17 +1,44 @@
 //boolean tamandimulai = false;
 
 class Taman{
-  
+  Hujan[] hujan;
+
+  public Taman(Hujan[] hjn) {
+    hujan = hjn;
+  }
+
   void begin(){
     
     //if (tamandimulai == true){
       hujan();
       jalanan(); 
-      //kubangan();
+      // kubangan(0,0);
+      push();
+        fill(#B2FCFF);
+        ellipse(440, 540, 300, 100);
+        ellipse(470, 580, 200, 100);
+        ellipse(570, 530, 200, 100);
+      pop();
+
       
       batangPohonKecil(200,-250,#876445,0.5);
       batangPohonKecil(600,-250,#876445,0.5); 
-      batangPohonKecil(800,-250,#876445,0.5);      
+      batangPohonKecil(800,-250,#876445,0.5);
+      push();
+        fill(#5BB318);
+        ellipse(40, 30, 100, 100);
+        ellipse(70, 30, 100, 100);
+        ellipse(110, 50, 100, 100);
+        ellipse(150, 40, 100, 100);
+        ellipse(190, 30, 120, 100);
+        ellipse(230, 30, 100, 100);
+        ellipse(270, 20, 100, 100);
+        ellipse(310, 10, 100, 100);
+        ellipse(350, 30, 120, 100);
+        ellipse(390, 40, 100, 100);
+        ellipse(430, 30, 120, 100);
+      pop();
+      
       semak(160,-40,#5BB318,1);
       semak(200,-40,#5BB318,1);
       semak(-20,-35,#5BB318,1);
@@ -22,7 +49,17 @@ class Taman{
       semak(-100,-30,#69c722,1);
 
       batangPohonKecil(1450,-260,#876445,0.5); 
-      batangPohonKecil(1750,-280,#876445,0.5); 
+      batangPohonKecil(1750,-280,#876445,0.5);
+      push();
+        fill(#5BB318);
+        ellipse(700, 30, 100, 100);
+        ellipse(740, 40, 100, 100);
+        ellipse(780, 30, 100, 100);
+        ellipse(820, 30, 100, 100);
+        ellipse(860, 30, 100, 100);
+        ellipse(900, 40, 100, 100);
+        ellipse(920, 30, 100, 100);
+      pop(); 
       semak(600, -80,#5BB318,1);
       semak(520, -80,#69c722,1);
       semak(680, -80,#69c722,1);
@@ -33,31 +70,35 @@ class Taman{
 
       pagar(0,0);
 
-      lampu(50,0);
-      lampu(500,-160);
+      lampu(50,500,1);
+      lampu(500,320,1);
 
       semak(950, 60,#5BB318,2);
       semak(800, 60,#69c722,2);
-      
-      batangPohonBesar(1100,-240,#876445,1);
+
+      batangPohonBesar(1100,-210,#876445,1);
+      pushMatrix();
+        fill(#876445);
+        quad(1070, 240, 950, 110, 980, 110, 1070, 170);
+      popMatrix();
+      push();
+        fill(#5BB318);
+        ellipse(970, 50, 200, 200);
+        ellipse(1070, 25, 200, 200);
+        ellipse(1170, 60, 200, 200);
+        ellipse(1230, 60, 200, 200);
+      pop();
     //} else {
       
     //}
   }
+
   void hujan(){
-    pushMatrix();
-      for (int k = 0; k < 75; k++) {
-  
-        float random1= random(width);
-        float random2= random(height);
-        float kecepatan = random(2,10);
-        random2 += kecepatan/10;
-        stroke(#4A9FF5);
-        strokeWeight(3);
-        line(random1, random2, random1, random2+10);
-      }
-    popMatrix();
+    for (int i = 0; i < hujan.length; i++) {
+    hujan[i].display();
   }
+  }
+
   void jalanan(){
     pushMatrix();
      beginShape();
@@ -70,21 +111,24 @@ class Taman{
      endShape(CLOSE);
     popMatrix();
   }
-  void kubangan(){
-    pushMatrix();
-      fill(#B2FCFF);
+  // void kubangan(int x, int y){
+  //   pushMatrix();
+  //     translate(x,y);
+  //     fill(#B2FCFF);
       
-      bezier(100, 450, 90, 400, 125, 375, 175, 400);
-      bezier(175, 400, 150, 350, 225, 325, 250, 350);
-      //line(175, 400, 250, 350);
-      bezier(250, 350, 250, 275, 375, 300, 350, 375);
-      //line(250, 350, 350, 375);
-      bezier(350, 375, 400, 375, 425, 400, 400, 450);
-      //line(350, 375, 400, 450);
-      bezier(100, 450, 100, 475, 400, 475, 400, 450);
-      //line(100, 450, 400, 450);
-    popMatrix();
-  }
+  //     bezier(100, 450, 90, 400, 125, 375, 175, 400);
+  //     bezier(175, 400, 150, 350, 225, 325, 250, 350);
+  //     //line(175, 400, 250, 350);
+  //     bezier(250, 350, 250, 275, 375, 300, 350, 375);
+  //     //line(250, 350, 350, 375);
+  //     bezier(350, 375, 400, 375, 425, 400, 400, 450);
+  //     //line(350, 375, 400, 450);
+  //     bezier(100, 450, 100, 475, 200, 475, 200, 450);
+  //     bezier(200, 450, 200, 475, 300, 475, 300, 450);
+  //     // //line(100, 450, 400, 450);
+
+  //   popMatrix();
+  // }
 
   //rencana dirumah nanti kalo sempat jadi fungsi jadinya manggil 3 fungsi langsung
   void semak(int x, int y, color g, float scale){
@@ -160,21 +204,19 @@ class Taman{
     pop();
   }
 
-  void lampu(int x, int y){
+  void lampu(int x, int y, int z){
     push();
-      translate(x,y);
+      translate(x,y,z);
       stroke(#0F0E0E);
       strokeWeight(15);
-      line(0, 300, 0, 480);  
-    pop();
-    pushMatrix();
-      translate(x,y);
-      fill(#0F0E0E);
-      rect(0, 290, 40, 60, 20);
+      line(0, 0, 0, -180);
+      strokeWeight(4);
       rectMode(CENTER);
+      fill(#0F0E0E);
+      rect(0, -200, 40, 60, 20);
       fill(#FFFF00);
-      rect(0, 290, 20, 40, 10);
-    popMatrix();
+      rect(0, -200, 20, 40, 10);
+    pop();
 
   }
 }
