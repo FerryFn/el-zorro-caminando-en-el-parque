@@ -2,7 +2,8 @@ class Fox {
   // Fox state animations
   final String[] STATES = {
     "idle",
-    "walking"
+    "walking",
+    "sitting",
   };
 
   // Variabel pengatur rubah
@@ -14,6 +15,9 @@ class Fox {
   int posY = 0;
   int posZ = 0;
   String currentState = STATES[1];
+  
+  // Variabel untuk posisi rubah tanpa mengubah posisi aslinya
+  int relativePosY = 0;
 
   // Variabel untuk animasi gerakan tangan
   float rightArmRotate = 0;
@@ -25,10 +29,14 @@ class Fox {
   float rightKneePosY = 20;
   float rightFootPosX = 20;
   float rightFootPosY = 40;
+  float rightLegRotate = 0;
+
   float leftKneePosX = 0;
   float leftKneePosY = 20;
   float leftFootPosX = 0;
   float leftFootPosY = 40;
+  float leftLegRotate = 0;
+
   int rightWalkCycle = 0;
   int leftWalkCycle = 0;
 
@@ -63,10 +71,15 @@ class Fox {
       } else if (keyCode == DOWN) {
         posY += speed;
         currentState = STATES[1];
+      } else if (key == 32) { // Space
+        rightArmRotate = 0;
+        leftArmRotate = 0;
+        currentState = STATES[2];
       }
-    } else {
+    } else if (currentState != STATES[2]) {
       rightWalkCycle = 0;
       leftWalkCycle = 0;
+      bodyPosYRelative = 0;
       currentState = STATES[0];
     }
   }
@@ -90,20 +103,55 @@ class Fox {
         rightKneePosY = 20;
         rightFootPosX = 0;
         rightFootPosY = 40;
+        rightLegRotate = 0;
+
         leftKneePosX = 0;
         leftKneePosY = 20;
         leftFootPosX = 0;
         leftFootPosY = 40;
+        leftLegRotate = 0;
+
         bodyPosYRelative = 0;
+
         blinking();
         idle();
       } else if (currentState == STATES[1]) {
         // Status: berjalan
+        rightLegRotate = 0;
+        leftLegRotate = 0;
+
         blinking();
         walk();
+      } else if (currentState == STATES[2]) {
+        // Status: duduk
+        sitting();
       }
     }
     popMatrix();
+  }
+  
+  // Stauts: duduk
+  void sitting() {
+    pushMatrix();
+    {
+      translate(0, relativePosY, 0);
+      _body();
+
+      // Menggeser kepala, dan animasi menggerakkan kepala
+      pushMatrix();
+      {
+        translate(0, -120);
+        rotate(radians(headRadians));
+        _head();
+      }
+      popMatrix();
+    }
+    popMatrix();
+
+    rightLegRotate = -60;
+    leftLegRotate = -60;
+    relativePosY = 40;
+    _idleController();
   }
 
   // Animasi berkedip
@@ -314,7 +362,7 @@ class Fox {
     }
     popMatrix();
 
-    pushMatrix();
+    push();
     {
       translate(0, bodyPosYRelative); // Gerakan tubuh
 
@@ -340,9 +388,10 @@ class Fox {
 
       // Leher
       fill(#FEC368);
+      rectMode(CORNER);
       rect(-5, -120, 10, 10, 20);
     }
-    popMatrix();
+    pop();
 
     _rightLeg(); // Kaki kanan
     pushMatrix();
@@ -353,7 +402,7 @@ class Fox {
     }
     popMatrix();
   }
-  
+
   // Ekor
   private void _tail() {
     fill(#D9A659);
@@ -432,19 +481,20 @@ class Fox {
     pushMatrix();
     {
       translate(10, -45);
+      rotate(radians(leftLegRotate));
       fill(#D9A659);
 
       beginShape();
-      curveVertex(-6, 0);
-      curveVertex(-6, 0);
-      curveVertex(6, 0);
+      curveVertex(-6, bodyPosYRelative);
+      curveVertex(-6, bodyPosYRelative);
+      curveVertex(6, bodyPosYRelative);
       curveVertex(leftKneePosX + 6, leftKneePosY);
       curveVertex(leftFootPosX + 6, leftFootPosY);
       curveVertex(leftFootPosX, leftFootPosY + 5);
       curveVertex(leftFootPosX - 6, leftFootPosY);
       curveVertex(leftKneePosX - 6, leftKneePosY);
-      curveVertex(-6, 0);
-      curveVertex(-6, 0);
+      curveVertex(-6, bodyPosYRelative);
+      curveVertex(-6, bodyPosYRelative);
       endShape();
 
       noStroke();
@@ -457,19 +507,20 @@ class Fox {
     pushMatrix();
     {
       translate(-15, -45);
+      rotate(radians(rightLegRotate));
       fill(#FEC368);
 
       beginShape();
-      curveVertex(-6, 0);
-      curveVertex(-6, 0);
-      curveVertex(6, 0);
+      curveVertex(-6, bodyPosYRelative);
+      curveVertex(-6, bodyPosYRelative);
+      curveVertex(6, bodyPosYRelative);
       curveVertex(rightKneePosX + 6, rightKneePosY);
       curveVertex(rightFootPosX + 6, rightFootPosY);
       curveVertex(rightFootPosX, rightFootPosY + 5);
       curveVertex(rightFootPosX - 6, rightFootPosY);
       curveVertex(rightKneePosX - 6, rightKneePosY);
-      curveVertex(-6, 0);
-      curveVertex(-6, 0);
+      curveVertex(-6, bodyPosYRelative);
+      curveVertex(-6, bodyPosYRelative);
       endShape();
 
       noStroke();
