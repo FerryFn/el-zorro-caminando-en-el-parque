@@ -12,7 +12,8 @@ class Taman{
     //if (tamandimulai == true){
       hujan();
       jalanan(); 
-      // kubangan(0,0);
+
+
       push();
         fill(#B2FCFF);
         ellipse(440, 540, 300, 100);
@@ -88,6 +89,7 @@ class Taman{
         ellipse(1170, 60, 200, 200);
         ellipse(1230, 60, 200, 200);
       pop();
+      sign(0,0);
     //} else {
       
     //}
@@ -111,24 +113,6 @@ class Taman{
      endShape(CLOSE);
     popMatrix();
   }
-  // void kubangan(int x, int y){
-  //   pushMatrix();
-  //     translate(x,y);
-  //     fill(#B2FCFF);
-      
-  //     bezier(100, 450, 90, 400, 125, 375, 175, 400);
-  //     bezier(175, 400, 150, 350, 225, 325, 250, 350);
-  //     //line(175, 400, 250, 350);
-  //     bezier(250, 350, 250, 275, 375, 300, 350, 375);
-  //     //line(250, 350, 350, 375);
-  //     bezier(350, 375, 400, 375, 425, 400, 400, 450);
-  //     //line(350, 375, 400, 450);
-  //     bezier(100, 450, 100, 475, 200, 475, 200, 450);
-  //     bezier(200, 450, 200, 475, 300, 475, 300, 450);
-  //     // //line(100, 450, 400, 450);
-
-  //   popMatrix();
-  // }
 
   //rencana dirumah nanti kalo sempat jadi fungsi jadinya manggil 3 fungsi langsung
   void semak(int x, int y, color g, float scale){
@@ -217,6 +201,29 @@ class Taman{
       fill(#FFFF00);
       rect(0, -200, 20, 40, 10);
     pop();
+  }
 
+  void sign(int x, int y){
+    push();
+      translate(x,y);
+      pushMatrix();
+      fill(#DEB887);
+      rect(690, 275, 20, 60);
+      rect(850, 275, 20, 60);
+      fill(#A55B53);
+      rect(670, 150, 220, 150, 10);
+      // beginShape();
+      //   vertex(670, 330);
+      //   vertex(670, 230);
+      //   vertex(870, 230);
+      //   vertex(870, 330);
+      // endShape(CENTER);
+      fill(#DEB887);
+      rect(690, 160, 180, 120, 5);
+      
+      // rect(x, y, width, height);
+      rectMode(CENTER);
+      popMatrix();
+    pop();
   }
 }
