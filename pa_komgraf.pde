@@ -2,6 +2,7 @@ menu Menu = new menu();
 Fox fox = new Fox();
 Hujan[] hujan = new Hujan[100];
 Taman taman = new Taman(fox, hujan);
+Danau danau = new Danau(fox, hujan);
 
 void setup() {
   size(1280, 720, P3D);
@@ -17,7 +18,7 @@ void setup() {
 }
 
 void draw() {
-  taman.begin();
+  danau.begin();
   fox.control();
   fox.display();
 

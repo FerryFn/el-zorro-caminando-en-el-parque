@@ -149,7 +149,6 @@ class Taman{
     popMatrix();
   }
 
-  //rencana dirumah nanti kalo sempat jadi fungsi jadinya manggil 3 fungsi langsung
   void semak(int x, int y, int z, color g, float scale){
     //dibungkus pake quad    
     pushMatrix();
@@ -253,12 +252,6 @@ class Taman{
       rect(850, 275, 20, 60);
       fill(#A55B53);
       rect(670, 150, 220, 150, 10);
-      // beginShape();
-      //   vertex(670, 330);
-      //   vertex(670, 230);
-      //   vertex(870, 230);
-      //   vertex(870, 330);
-      // endShape(CENTER);
       fill(#DEB887);
       rect(690, 160, 180, 120, 5);
       
