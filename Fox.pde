@@ -1,31 +1,32 @@
 class Fox {
-  // Fox state animations
+  // Fox animation states
   final String[] STATES = {
     "idle",
     "walking",
     "sitting",
+    "jumping",
   };
 
-  // Variabel pengatur rubah
+  // Fox control
   int speed = 4;
   int defaultSpeed = 4;
   boolean isFacingRight = true;
 
-  // Variabel untuk posisi rubah pada kanvas
+  // Fox position on canvas
   int posX = 0;
   int posY = 0;
   int posZ = 2;
   String currentState = STATES[1];
   
-  // Variabel untuk posisi rubah tanpa mengubah posisi aslinya
+  // Fox position relative to its original position
   int relativePosY = 0;
 
-  // Variabel untuk animasi gerakan tangan
+  // Fox's arms rotation animation control
   float rightArmRotate = 0;
   float leftArmRotate = 0;
   boolean rightArmRotationIsClockwise = true;
 
-  // Variabel untuk animasi gerakan kaki
+  // Fox's legs animation control
   float rightKneePosX = 10;
   float rightKneePosY = 20;
   float rightFootPosX = 20;
@@ -41,21 +42,21 @@ class Fox {
   int rightWalkCycle = 0;
   int leftWalkCycle = 0;
 
-  // Variabel untuk animasi gerakan kepala mengangguk
+  // Fox's nodding animation control
   float headRadians = 0;
   boolean headRotationIsClockwise = true;
 
-  // Variabel untuk animasi gerakan naik-turun badan
+  // Fox's torso animation control
   float bodyPosYRelative = 0;
   boolean bodyIsGoingDownward = true;
 
-  // Variabel untuk animasi kedipan mata
-  int timeToWink = 0; // Waktu yang berjalan sebelum proses kedipan
-  boolean isWinking = false; // Jika sedang melakukan kedipan
-  boolean eyeIsClosing = false; // Apabila mata akan menutup
-  int eyeHeight = 25; // Tinggi mata untuk animasi kedipan
+  // Fox blinking animation control
+  int timeToBlink = 0; // Waiting before winking
+  boolean isBlinking = false;
+  boolean eyeIsClosing = false;
+  int eyeHeight = 25;
 
-  // Kontrol gerakan rubah dari inputan user
+  // Input from user control
   void control() {
     if (keyPressed) {
       if (keyCode == RIGHT) {
@@ -72,7 +73,7 @@ class Fox {
       } else if (keyCode == DOWN) {
         posY += speed;
         currentState = STATES[1];
-      } else if (key == 32) { // Space
+      } else if (key == 's') {
         rightArmRotate = 0;
         leftArmRotate = 0;
         currentState = STATES[2];
@@ -85,18 +86,18 @@ class Fox {
     }
   }
   
-  // Menghentikan posisi jalan rubah
+  // Stop Fox from walking
   void stopWalk() {
     speed = 0;
   }
 
-  // Menampilkan rubah sesuai state
+  // Display Fox according to its state
   void display() {
     pushMatrix();
     {
-      translate(posX, posY, posZ); // Posisi rubah
-      scale(0.7); // Ukuran rubah
-      // Arah jalan rubah
+      translate(posX, posY, posZ); // Fox's position
+      scale(0.7); // Fox's size
+      // Fox's walking direction
       if (isFacingRight) {
         scale(1, 1);
       } else {
@@ -104,7 +105,7 @@ class Fox {
       }
 
       if (currentState == STATES[0]) {
-        // Status: diam berdiri
+        // Status: idling
         rightKneePosX = 0;
         rightKneePosY = 20;
         rightFootPosX = 0;
@@ -122,56 +123,61 @@ class Fox {
         blinking();
         idle();
       } else if (currentState == STATES[1]) {
-        // Status: berjalan
+        // Status: walking
         rightLegRotate = 0;
         leftLegRotate = 0;
 
         blinking();
         walk();
       } else if (currentState == STATES[2]) {
-        // Status: duduk
+        // Status: sitting
         blinking();
         sitting();
+      } else if (currentState == STATES[3]) {
+        // Status: jumping
+        jumping();
       }
     }
     popMatrix();
   }
+  
+  void jumping() {
+    
+  }
 
-  // Animasi berkedip
+  // Blinking animation
   void blinking() {
-    if (!isWinking) {
-      timeToWink++;
-      if (timeToWink >= 180) {
-        // Memberi tahu bahwa rubah sedang berkedip
-        isWinking = true;
-        // Mengaktifkan animasi menutup mata
+    if (!isBlinking) {
+      timeToBlink++;
+      if (timeToBlink >= 180) {
+        // Informs that Fox is still blinking
+        isBlinking = true;
+        // Cue closing eyes animation
         eyeIsClosing = true;
-        // Mereset waktu untuk berkedip
-        timeToWink = 0;
+        // Resets the time to blink again
+        timeToBlink = 0;
       }
     }
 
-    // Apabila isWinking aktif,
-    // rubah akan melakukan animasi berkedip
-    if (isWinking) {
-      // Bila menutup, tinggi matanya berkurang dan sebaliknya
+    // If isBlinking is active, Fox will do the blink animation 
+    if (isBlinking) {
+      // If Fox want to close his eyes,
+      // the eyes' height will decrease and vice-versa
       eyeHeight += !eyeIsClosing ? 5 : -5;
 
-      // Apabila mata sudah menutup, akan dilakukan
-      // animasi untuk membuka mata
+      // If Fox's eyes is closed, cue opening eyes animation
       if (eyeHeight <= 0) {
         eyeIsClosing = false;
       }
 
-      // Apabila sudah membuka mata, akan menunggu waktu
-      // untuk kedipan selanjutnya
+      // If Fox has opened his eyes, waits until next blink
       if (!eyeIsClosing && eyeHeight >= 25) {
-        isWinking = false;
+        isBlinking = false;
       }
     }
   }
 
-  // Status: diam
+  // Status: idling
   void idle() {
     _idleController();
     _body();
@@ -186,9 +192,9 @@ class Fox {
     popMatrix();
   }
 
-  // Pengatur animasi diam
+  // Idling animation controller
   private void _idleController() {
-    // Pengatur animasi gerakan kepala
+    // Head movement animation controller
     headRadians += headRotationIsClockwise ? 0.1 : -0.1;
     if (headRadians > 2.5) {
       headRotationIsClockwise = false;
@@ -196,7 +202,7 @@ class Fox {
       headRotationIsClockwise = true;
     }
 
-    // Pengatur animasi gerakan tangan
+    // Arms animation controller
     rightArmRotate += rightArmRotationIsClockwise ? 0.3 : -0.3;
     leftArmRotate += !rightArmRotationIsClockwise ? 0.3 : -0.3;
     if (rightArmRotate > 10) {
@@ -206,12 +212,12 @@ class Fox {
     }
   }
 
-  // Status: berjalan
+  // Status: walking
   void walk() {
     _walkController();
     _body();
 
-    // Menggeser kepala dan animasi menggerakkan kepala
+    // Moves head, and head nodding animation
     pushMatrix();
     {
       translate(0, -120);
@@ -220,10 +226,10 @@ class Fox {
     }
     popMatrix();
   }
-
+  
+  // Walking animation controller
   private void _walkController() {
-
-    // Pengatur animasi gerakan kepala
+    // Head movement animation controller
     headRadians += headRotationIsClockwise ? 0.3 : -0.3;
     if (headRadians > 3) {
       headRotationIsClockwise = false;
@@ -231,7 +237,7 @@ class Fox {
       headRotationIsClockwise = true;
     }
 
-    // Pengatur animasi gerakan badan saat berjalan
+    // Body movement animation controller
     bodyPosYRelative += bodyIsGoingDownward ? 0.25 : -0.25;
     if (bodyPosYRelative > 3) {
       bodyIsGoingDownward = false;
@@ -239,7 +245,7 @@ class Fox {
       bodyIsGoingDownward = true;
     }
 
-    // Pengatur animasi gerakan tangan
+    // Arms animation controller
     rightArmRotate += rightArmRotationIsClockwise ? 2 : -2;
     leftArmRotate += !rightArmRotationIsClockwise ? 2 : -2;
     if (rightArmRotate > 25) {
@@ -248,17 +254,17 @@ class Fox {
       rightArmRotationIsClockwise = true;
     }
 
-    // Pengatur animasi siklus berjalan untuk kaki kanan
+    // Right leg walk cycle animation controller
     if (rightWalkCycle == 0) {
-      // Arah kaki di depan
+      // Leg position is in the front
       rightKneePosX = 10;
       rightKneePosY = 20;
       rightFootPosX = 20;
       rightFootPosY = 40;
 
-      rightWalkCycle = 1; // Ke siklus berjalan selanjutnya
+      rightWalkCycle = 1; // Next walking phase
     } else if (rightWalkCycle == 1) {
-      // Animasi menggerakkan kaki ke belakang
+      // Moves leg backwards
       rightKneePosX -= 0.4;
       rightKneePosY += 0.1;
       rightFootPosX -= 1.2;
@@ -266,18 +272,18 @@ class Fox {
       rightFootPosY = min(40, rightFootPosY);
 
       if (rightFootPosX <= -10) {
-        rightWalkCycle = 2;  // Ke siklus berjalan selanjutnya
+        rightWalkCycle = 2;  // Next walking phase
       }
     } else if (rightWalkCycle == 2) {
-      // Animasi menarik kaki ke atas
+      // Moves foot upwards
       rightKneePosY -= 0.5;
       rightFootPosY -= 1;
 
       if (rightFootPosY <= 30) {
-        rightWalkCycle = 3;  // Ke siklus berjalan selanjutnya
+        rightWalkCycle = 3;  // Next walking phase
       }
     } else if (rightWalkCycle == 3) {
-      // Animasi menggerakkan kaki ke depan
+      // Moves leg forwards
       rightKneePosX += 0.4;
       rightKneePosY += 0.5;
       rightFootPosX += 1.2;
@@ -286,21 +292,21 @@ class Fox {
       rightKneePosY = min(20, rightKneePosY);
 
       if (rightFootPosX >= 20) {
-        rightWalkCycle = 0;  // Mereset siklus berjalan
+        rightWalkCycle = 0;  // Reset the walk cycle
       }
     }
 
-    // Pengatur animasi siklus berjalan untuk kaki kiri
+    // Left leg walk cycle animation controller
     if (leftWalkCycle == 0) {
-      // Arah kaki di belakang
+      // Leg position is in the back
       leftKneePosX = 0;
       leftKneePosY = 20;
       leftFootPosX = -10;
       leftFootPosY = 35;
 
-      leftWalkCycle = 1; // Ke siklus berjalan selanjutnya
+      leftWalkCycle = 1; // Next walking phase
     } else if (leftWalkCycle == 1) {
-      // Animasi menggerakkan kaki ke depan
+      // Moves leg forwards
       leftKneePosX += 0.4;
       leftKneePosY += 0.5;
       leftFootPosX += 1.2;
@@ -309,10 +315,10 @@ class Fox {
       leftKneePosY = min(20, leftKneePosY);
 
       if (leftFootPosX >= 20) {
-        leftWalkCycle = 2; // Ke siklus berjalan selanjutnya
+        leftWalkCycle = 2; // Next walking phase
       }
     } else if (leftWalkCycle == 2) {
-      // Animasi menggerakkan kaki ke belakang
+      // Move leg backwards
       leftKneePosX -= 0.4;
       leftKneePosY += 0.1;
       leftFootPosX -= 1.2;
@@ -320,27 +326,27 @@ class Fox {
       leftFootPosY = min(40, leftFootPosY);
 
       if (leftFootPosX <= -10) {
-        leftWalkCycle = 3; // Ke siklus berjalan selanjutnya
+        leftWalkCycle = 3; // Next walking phase
       }
     } else if (leftWalkCycle == 3) {
-      // Animasi menarik kaki ke atas
+      // Move foot upwards
       leftKneePosY -= 0.5;
       leftFootPosY -= 1;
 
       if (leftFootPosY <= 30) {
-        leftWalkCycle = 0; // Mereset siklus berjalan
+        leftWalkCycle = 0; // Reset the walk cycle
       }
     }
   }
   
-  // Status: duduk
+  // Status: sitting
   void sitting() {
     pushMatrix();
     {
       translate(0, relativePosY, 0);
       _body();
 
-      // Menggeser kepala, dan animasi menggerakkan kepala
+      // Moves head, and head nodding animation
       pushMatrix();
       {
         translate(0, -120);
@@ -357,24 +363,24 @@ class Fox {
     _idleController();
   }
   
-  // Badan
+  // Body
   private void _body() {
     noStroke();
 
-    _leftLeg(); // Kaki kiri
+    _leftLeg(); // Left leg
     pushMatrix();
     {
-      translate(0, bodyPosYRelative); // Gerakan tubuh
-      _tail(); // Ekor
-      _leftArm(); // Tangan kiri
+      translate(0, bodyPosYRelative); // Body movement
+      _tail(); // Tail
+      _leftArm(); // Left arm
     }
     popMatrix();
 
     push();
     {
-      translate(0, bodyPosYRelative); // Gerakan tubuh
+      translate(0, bodyPosYRelative); // Body movement
 
-      // Badan
+      // Body
       fill(#FEC368);
       beginShape();
       vertex(0, -115);
@@ -384,7 +390,7 @@ class Fox {
       bezierVertex(20, -90, 20, -115, 0, -115);
       endShape(CLOSE);
 
-      // Baju
+      // T-shirt
       fill(#383878);
       beginShape();
       vertex(0, -115);
@@ -394,24 +400,24 @@ class Fox {
       bezierVertex(20, -90, 20, -115, 0, -115);
       endShape(CLOSE);
 
-      // Leher
+      // Neck
       fill(#FEC368);
       rectMode(CORNER);
       rect(-5, -120, 10, 10, 20);
     }
     pop();
 
-    _rightLeg(); // Kaki kanan
+    _rightLeg(); // Right leg
     pushMatrix();
     {
-      // Tangan kanan dan gerakan tubuh
+      // Right arm and body movement
       translate(0, bodyPosYRelative);
       _rightArm();
     }
     popMatrix();
   }
 
-  // Ekor
+  // Tail
   private void _tail() {
     fill(#D9A659);
     pushMatrix();
@@ -436,55 +442,55 @@ class Fox {
     popMatrix();
   }
 
-  // Tangan kiri
+  // Left arm
   private void _leftArm() {
     pushMatrix();
     {
       translate(10, -109);
       rotate(radians(60 + leftArmRotate));
 
-      // Lengan
+      // Arm
       fill(#D9A659);
       quad(-5, -3, 0, 3,
         60, 7, 60, -7);
 
-      // Lengan Baju
+      // T-shirt sleeve
       fill(#303064);
       quad(-5, -3, 0, 3,
         30, 5, 30, -5);
 
-      // Tangan
+      // Hand
       fill(#D9A659);
       circle(60, 0, 25);
     }
     popMatrix();
   }
 
-  // Tangan kanan
+  // Right Arm
   private void _rightArm() {
     pushMatrix();
     {
       translate(-10, -109);
       rotate(radians(-60 + rightArmRotate));
 
-      // Lengan
+      // Arm
       fill(#FEC368);
       quad(0, -3, -5, 3,
         -60, 7, -60, -7);
 
-      // Lengan Baju
+      // T-shirt sleeve
       fill(#383878);
       quad(0, -3, -5, 3,
         -30, 5, -30, -5);
 
-      // Tangan
+      // Hand
       fill(#FEC368);
       circle(-60, 0, 25);
     }
     popMatrix();
   }
 
-  // Kaki kiri
+  // Left leg
   private void _leftLeg() {
     pushMatrix();
     {
@@ -510,7 +516,7 @@ class Fox {
     popMatrix();
   }
 
-  // Kaki kanan
+  // Right leg
   private void _rightLeg() {
     pushMatrix();
     {
@@ -536,22 +542,21 @@ class Fox {
     popMatrix();
   }
 
-  // Kepala
+  // Head
   private void _head() {
     pushMatrix();
     {
       translate(0, bodyPosYRelative);
       noStroke();
-      // For loop untuk mirroring
+      // For loop for mirroring
       for (int i = 0; i < 2; i++) {
         pushMatrix();
         {
-          // Melakukan mirroring
-          //translate(0, -120);
+          // Mirroring
           if (i == 1)
             scale(-0.9, 1);
 
-          // Telinga
+          // Ears
           pushMatrix();
           {
             if (i == 1) {
@@ -582,7 +587,7 @@ class Fox {
           }
           popMatrix();
 
-          // Kepala (dasar)
+          // Head (base)
           fill(#FEC368);
           beginShape();
           vertex(0, -120);
@@ -594,7 +599,7 @@ class Fox {
           bezierVertex(-90, -25, -60, 0, 0, 0);
           endShape(CLOSE);
 
-          // Kepala (moncong)
+          // Head (muzzle)
           if (i == 1) {
             fill(#BFB4AE);
           } else {
@@ -611,7 +616,7 @@ class Fox {
         popMatrix();
       }
 
-      // Moncong depan
+      // Muzzle
       fill(#FEEDE5);
       beginShape();
       vertex(0, -60);
@@ -619,7 +624,7 @@ class Fox {
       bezierVertex(50, -20, 30, -5, 0, 0);
       endShape(CLOSE);
 
-      // Rambut
+      // Hair
       fill(#FEC368);
       beginShape();
       curveVertex(-25, -110);
@@ -634,7 +639,7 @@ class Fox {
       curveVertex(25, -110);
       endShape(CLOSE);
 
-      // Hidung
+      // Nose
       fill(#2E2E2E);
       beginShape();
       curveVertex(45, -30);
@@ -646,13 +651,13 @@ class Fox {
       curveVertex(45, -30);
       endShape(CLOSE);
 
-      _eyes(); // Mata
-      _mouth(); // Mulut
+      _eyes(); // Eyes
+      _mouth(); // Mouth
     }
     popMatrix();
   }
 
-  // Mata
+  // Eyes
   private void _eyes() {
     fill(#2E2E2E);
 
@@ -667,7 +672,7 @@ class Fox {
     popMatrix();
   }
 
-  // Mulut
+  // Mouth
   private void _mouth() {
     noFill();
     stroke(#2E2E2E);

@@ -2,6 +2,7 @@ class Taman {
   // Other classes
   Fox fox;
   Hujan[] hujan;
+  Icon icon;
 
   // Interactability: Roger
   PImage imageRoger;
@@ -25,11 +26,12 @@ class Taman {
   color treeBackdrop2 = #385450;
   color water = #6A8A99;
 
-  public Taman(Fox tempFox, Hujan[] hjn) {
+  public Taman(Fox tempFox, Icon tempIcon, Hujan[] hjn) {
     fox = tempFox;
     hujan = hjn;
+    icon = tempIcon;
   }
-  
+
   // Call this to play scene
   void begin() {
     background(#7CAB6D);
@@ -39,6 +41,7 @@ class Taman {
     layerControl();
 
     // Interactables in the scene
+    interactGoToLake();
     interactRoger();
 
     langit();
@@ -340,14 +343,31 @@ class Taman {
     }
   }
 
+  // Interactable: Go to the lake
+  void interactGoToLake() {
+    if (fox.posX >= 1200 && fox.posY >= 340 && fox.posY <= 460 && fox.isFacingRight) {
+      icon.arrowIcon(1200, 210, 11, true);
+      if (key == 32) { // Space
+        SceneControl.currentScene = 2; // Go to lake
+        fox.posX = 64;
+        fox.posY = 440;
+        fox.isFacingRight = true;
+      }
+    }
+  }
+
   // Interactable: Roger
   void interactRoger() {
     if (fox.posX >= 1000 && fox.posY >= 635 &&
-      fox.currentState == fox.STATES[2] && !audioRoger.isPlaying() &&
-      waitToRoger < 300) {
-      // Fox is sitting
-      fox.isFacingRight = false;
-      waitToRoger++;
+      !audioRoger.isPlaying() && waitToRoger < 300) {
+      if (fox.currentState == fox.STATES[2] || (keyPressed && key == 32)) { // Space
+        // Fox is sitting
+        fox.currentState = fox.STATES[2];
+        fox.isFacingRight = false;
+        waitToRoger++;
+      } else {
+        icon.exclamationIcon(1015, 460, 11, true);
+      }
     } else if (fox.posX >= 1000 && fox.posY >= 635 &&
       fox.currentState == fox.STATES[2] && !audioRoger.isPlaying() &&
       waitToRoger >= 300 && !audioRogerHasPlayed) {

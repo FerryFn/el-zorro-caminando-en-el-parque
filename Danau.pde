@@ -1,6 +1,7 @@
 class Danau {
   Fox fox;
   Hujan[] hujan;
+  Icon icon;
 
   color bush1 = #4C8F4F;
   color bush2 = #36784E;
@@ -14,14 +15,18 @@ class Danau {
   color treeBackdrop2 = #385450;
   color water = #6A8A99;
 
-  public Danau(Fox tempFox, Hujan[] hjn){
+  public Danau(Fox tempFox, Icon tempIcon, Hujan[] hjn){
     fox = tempFox;
-    hujan = hjn;  
+    hujan = hjn;
+    icon = tempIcon;
   }
   
   void begin(){
 
     background(#7CAB6D);
+    
+    interactGoToCentralPark();
+    
     langit();
     hujan();
     jalanan();
@@ -175,5 +180,18 @@ class Danau {
       arc(970, 235, w, h, PI, TWO_PI);
     popMatrix();
 
+  }
+  
+  // Interactable: Go to the central park
+  void interactGoToCentralPark() {
+    if (fox.posX <= 60 && fox.posY >= 385 && fox.posY <= 500 && !fox.isFacingRight) {
+      icon.arrowIcon(80, 240, 11, false);
+      if (keyPressed && key == 32) { // Space
+        SceneControl.currentScene = 1; // Go to central park
+        fox.posX = 1200;
+        fox.posY = 380;
+        fox.isFacingRight = false;
+      }
+    }
   }
 }
