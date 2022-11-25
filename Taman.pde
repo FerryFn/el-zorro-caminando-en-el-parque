@@ -43,6 +43,8 @@ class Taman {
     // Interactables in the scene
     interactGoToLake();
     interactRoger();
+    interactSign();
+    interactPuddle();
 
     langit();
 
@@ -403,6 +405,22 @@ class Taman {
         text("ROGER SUMATERA", width / 2, height - 64);
       }
       pop();
+    }
+  }
+
+  // Interactable: Sign
+  void interactSign() {
+    if (fox.posX >= 685 && fox.posX <= 875 &&
+      fox.posY >= 330 && fox.posY <= 340) {
+      icon.exclamationIcon(775, 150, 11, true);
+    }
+  }
+
+  // Interactable: Puddle
+  void interactPuddle() {
+    if (fox.posX >= 375 && fox.posX <= 570 &&
+      fox.posY >= 500 && fox.posY <= 610) {
+      icon.exclamationIcon(475, 330, 11, true);
     }
   }
 }
