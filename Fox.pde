@@ -130,6 +130,7 @@ class Fox {
         walk();
       } else if (currentState == STATES[2]) {
         // Status: duduk
+        blinking();
         sitting();
       }
     }
