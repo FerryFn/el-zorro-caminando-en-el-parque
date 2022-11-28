@@ -14,17 +14,20 @@ class Taman {
   boolean audioRogerHasPlayed = false;
 
   // Color palette
-  color bush1 = #4C8F4F;
-  color bush2 = #36784E;
-  color fence = #352E3D;
-  color lampLight = #FCC88D;
-  color lampStructure = #24222E;
-  color path = #5A5A70;
-  color sky1 = #AFCFC2;
-  color treeTrunk = #844344;
-  color treeBackdrop1 = #2D434D;
-  color treeBackdrop2 = #385450;
-  color water = #6A8A99;
+  color colorBush1 = #4C8F4F;
+  color colorBush2 = #36784E;
+  color colorFence = #352E3D;
+  color colorLampLight = #FCC88D;
+  color colorLampStructure = #24222E;
+  color colorPath = #5A5A70;
+  color colorRock = #828886;
+  color colorSky = #AFCFC2;
+  color colorTreeTrunk = #844344;
+  color colorTreeBackdrop1 = #2D434D;
+  color colorTreeBackdrop2 = #385450;
+  color colorWater = #6A8A99;
+  color colorWood1 = #DEB887;
+  color colorWood2 = #A55B53;
 
   public Taman(Fox tempFox, Icon tempIcon, Hujan[] hjn) {
     fox = tempFox;
@@ -53,7 +56,7 @@ class Taman {
 
     push();
     {
-      fill(water);
+      fill(colorWater);
       ellipse(440, 540, 300, 100);
       ellipse(470, 580, 200, 100);
       ellipse(570, 530, 200, 100);
@@ -61,12 +64,12 @@ class Taman {
     pop();
 
 
-    batangPohonKecil(200, -250, treeTrunk, 0.5);
-    batangPohonKecil(600, -250, treeTrunk, 0.5);
-    batangPohonKecil(800, -250, treeTrunk, 0.5);
+    batangPohonKecil(200, -250, colorTreeTrunk, 0.5);
+    batangPohonKecil(600, -250, colorTreeTrunk, 0.5);
+    batangPohonKecil(800, -250, colorTreeTrunk, 0.5);
     push();
     {
-      fill(bush2);
+      fill(colorBush2);
       ellipse(40, 30, 100, 100);
       ellipse(70, 30, 100, 100);
       ellipse(110, 50, 100, 100);
@@ -81,20 +84,20 @@ class Taman {
     }
     pop();
 
-    semak(160, -40, 0, bush2, 1);
-    semak(200, -40, 0, bush2, 1);
-    semak(-20, -35, 0, bush2, 1);
-    semak(20, -35, 0, bush2, 1);
-    semak(280, -35, 0, bush1, 1);
-    semak(60, -30, 0, bush1, 1);
-    semak(100, -30, 0, bush1, 1);
-    semak(-100, -30, 0, bush1, 1);
+    semak(160, -40, 0, colorBush2, 1);
+    semak(200, -40, 0, colorBush2, 1);
+    semak(-20, -35, 0, colorBush2, 1);
+    semak(20, -35, 0, colorBush2, 1);
+    semak(280, -35, 0, colorBush1, 1);
+    semak(60, -30, 0, colorBush1, 1);
+    semak(100, -30, 0, colorBush1, 1);
+    semak(-100, -30, 0, colorBush1, 1);
 
-    batangPohonKecil(1450, -260, treeTrunk, 0.5);
-    batangPohonKecil(1750, -280, treeTrunk, 0.5);
+    batangPohonKecil(1450, -260, colorTreeTrunk, 0.5);
+    batangPohonKecil(1750, -280, colorTreeTrunk, 0.5);
     push();
     {
-      fill(bush2);
+      fill(colorBush2);
       ellipse(700, 30, 100, 100);
       ellipse(740, 40, 100, 100);
       ellipse(780, 30, 100, 100);
@@ -104,29 +107,29 @@ class Taman {
       ellipse(920, 30, 100, 100);
     }
     pop();
-    semak(600, -80, 0, bush2, 1);
-    semak(520, -80, 0, bush1, 1);
-    semak(680, -80, 0, bush1, 1);
-    semak(720, -80, 0, bush1, 1);
+    semak(600, -80, 0, colorBush2, 1);
+    semak(520, -80, 0, colorBush1, 1);
+    semak(680, -80, 0, colorBush1, 1);
+    semak(720, -80, 0, colorBush1, 1);
 
-    semak(-180, 150, 9, bush1, 2);
-    semak(-140, 150, 9, bush1, 2);
+    semak(-180, 150, 9, colorBush1, 2);
+    semak(-140, 150, 9, colorBush1, 2);
 
     pagar(0, 0);
 
     lampu(500, 320, 3);
     lampu(50, 500, 5);
 
-    semak(950, 60, 7, bush2, 2);
-    semak(800, 60, 7, bush1, 2);
+    semak(950, 60, 7, colorBush2, 2);
+    semak(800, 60, 7, colorBush1, 2);
 
-    batangPohonBesar(1100, -210, 7, treeTrunk, 1);
+    batangPohonBesar(1100, -210, 7, colorTreeTrunk, 1);
     push();
     {
       translate(0, 0, 8);
-      fill(treeTrunk);
+      fill(colorTreeTrunk);
       quad(1070, 240, 950, 110, 980, 110, 1070, 170);
-      fill(bush1);
+      fill(colorBush1);
       ellipse(970, 50, 200, 200);
       ellipse(1070, 25, 200, 200);
       ellipse(1170, 60, 200, 200);
@@ -139,9 +142,9 @@ class Taman {
   void langit() {
     push();
     noStroke();
-    fill(sky1);
+    fill(colorSky);
     rect(0, 0, width, 200);
-    fill(treeBackdrop1);
+    fill(colorTreeBackdrop1);
     for (int i = 0; i <= width / 30; i++) {
       arc(i * width / 30, 200, 60, 60, PI, TWO_PI);
     }
@@ -164,7 +167,7 @@ class Taman {
     {
       beginShape();
       noStroke();
-      fill(path);
+      fill(colorPath);
       vertex(0, 340);
       vertex(1280, 340);
       vertex(1280, 460);
@@ -242,7 +245,7 @@ class Taman {
     {
       translate(x, y);
       strokeWeight(10);
-      stroke(fence);
+      stroke(colorFence);
       for (int i = 0; i < 14; i++) {
         line(20 * i + 20 * i, 170, 20 * i + 20 * i, 270);
       }
@@ -259,14 +262,14 @@ class Taman {
     push();
     {
       translate(x, y, z);
-      stroke(lampStructure);
+      stroke(colorLampStructure);
       strokeWeight(15);
       line(0, 0, 0, -180);
       strokeWeight(4);
       rectMode(CENTER);
-      fill(lampStructure);
+      fill(colorLampStructure);
       rect(0, -200, 40, 60, 20);
-      fill(lampLight);
+      fill(colorLampLight);
       rect(0, -200, 20, 40, 10);
     }
     pop();
@@ -283,12 +286,12 @@ class Taman {
     {
       translate(x, y, z);
       pushMatrix();
-      fill(#DEB887);
+      fill(colorWood1);
       rect(690, 275, 20, 60);
       rect(850, 275, 20, 60);
-      fill(#A55B53);
+      fill(colorWood2);
       rect(670, 150, 220, 150, 10);
-      fill(#DEB887);
+      fill(colorWood1);
       rect(690, 160, 180, 120, 5);
 
       // rect(x, y, width, height);
@@ -317,7 +320,8 @@ class Taman {
 
   // For controlling areas that isn't passable by the Fox
   void boundaryControl() {
-    if (fox.posY <= 275 && fox.posX <= 555 && (keyCode == LEFT || keyCode == UP)) {
+    if (((fox.posX <= 555 && keyCode == LEFT) && fox.posY < 270) ||
+    (fox.posX < 555 && (fox.posY <= 275 && keyCode == UP))) {
       // Top left boundary
       fox.stopWalk();
     } else if ((fox.posY <= 220 && keyCode == UP) || (fox.posY >= height - 50 && keyCode == DOWN)) {
