@@ -16,8 +16,8 @@ class Fox {
   int posX = 0;
   int posY = 0;
   int posZ = 2;
-  String currentState = STATES[1];
-  
+  String currentState = STATES[0];
+
   // Fox position relative to its original position
   int relativePosY = 0;
 
@@ -56,6 +56,9 @@ class Fox {
   boolean eyeIsClosing = false;
   int eyeHeight = 25;
 
+  // Fox jump animation control
+  boolean isFalling = false;
+
   // Input from user control
   void control() {
     if (keyPressed) {
@@ -78,14 +81,14 @@ class Fox {
         leftArmRotate = 0;
         currentState = STATES[2];
       }
-    } else if (currentState != STATES[2]) {
+    } else if (currentState != STATES[2] && currentState != STATES[3]) {
       rightWalkCycle = 0;
       leftWalkCycle = 0;
       bodyPosYRelative = 0;
       currentState = STATES[0];
     }
   }
-  
+
   // Stop Fox from walking
   void stopWalk() {
     speed = 0;
@@ -135,14 +138,10 @@ class Fox {
         sitting();
       } else if (currentState == STATES[3]) {
         // Status: jumping
-        jumping();
+        jump();
       }
     }
     popMatrix();
-  }
-  
-  void jumping() {
-    
   }
 
   // Blinking animation
@@ -159,7 +158,7 @@ class Fox {
       }
     }
 
-    // If isBlinking is active, Fox will do the blink animation 
+    // If isBlinking is active, Fox will do the blink animation
     if (isBlinking) {
       // If Fox want to close his eyes,
       // the eyes' height will decrease and vice-versa
@@ -187,7 +186,7 @@ class Fox {
     {
       translate(0, -120);
       rotate(radians(headRadians));
-      _head();
+      _head(false);
     }
     popMatrix();
   }
@@ -222,11 +221,11 @@ class Fox {
     {
       translate(0, -120);
       rotate(radians(headRadians));
-      _head();
+      _head(false);
     }
     popMatrix();
   }
-  
+
   // Walking animation controller
   private void _walkController() {
     // Head movement animation controller
@@ -338,7 +337,7 @@ class Fox {
       }
     }
   }
-  
+
   // Status: sitting
   void sitting() {
     pushMatrix();
@@ -351,7 +350,7 @@ class Fox {
       {
         translate(0, -120);
         rotate(radians(headRadians));
-        _head();
+        _head(false);
       }
       popMatrix();
     }
@@ -362,7 +361,66 @@ class Fox {
     relativePosY = 40;
     _idleController();
   }
-  
+
+
+  // Status: jumping
+  void jump() {
+    _jumpController();
+    pushMatrix();
+    {
+      translate(0, relativePosY, 0);
+      _body();
+
+      // Moves head, and head nodding animation
+      pushMatrix();
+      {
+        translate(0, -120);
+        _head(true);
+      }
+      popMatrix();
+    }
+    popMatrix();
+  }
+
+  // Jumping animation controller
+  private void _jumpController() {
+    // Jumping animation
+    if (!isFalling) {
+      // If jumping upwards
+      rightArmRotate += 5;
+      leftArmRotate -= 5;
+      rightLegRotate += 3;
+      leftLegRotate -= 3;
+      relativePosY -= 4;
+
+      rightArmRotate = min(90, rightArmRotate);
+      leftArmRotate = max(-90, leftArmRotate);
+      rightLegRotate = min(45, rightLegRotate);
+      leftLegRotate = max(-45, leftLegRotate);
+      relativePosY = max(-90, relativePosY);
+    } else {
+      // If falling downwards after jumping
+      rightArmRotate -= 5;
+      leftArmRotate += 5;
+      rightLegRotate -= 3;
+      leftLegRotate += 3;
+      relativePosY += 5;
+
+      rightArmRotate = max(0, rightArmRotate);
+      leftArmRotate = min(0, leftArmRotate);
+      rightLegRotate = max(0, rightLegRotate);
+      leftLegRotate = min(0, leftLegRotate);
+      relativePosY = min(0, relativePosY);
+    }
+
+    // Jumping cycle
+    if ((relativePosY <= -90 && !isFalling) ||
+      (relativePosY >= 0 && isFalling)) {
+      isFalling = !isFalling;
+    }
+  }
+
+
   // Body
   private void _body() {
     noStroke();
@@ -543,7 +601,7 @@ class Fox {
   }
 
   // Head
-  private void _head() {
+  private void _head(boolean happyEyes) {
     pushMatrix();
     {
       translate(0, bodyPosYRelative);
@@ -651,7 +709,11 @@ class Fox {
       curveVertex(45, -30);
       endShape(CLOSE);
 
-      _eyes(); // Eyes
+      if (happyEyes) {
+        _happyEyes(); // Happy eyes
+      } else {
+        _eyes(); // Eyes
+      }
       _mouth(); // Mouth
     }
     popMatrix();
@@ -659,17 +721,42 @@ class Fox {
 
   // Eyes
   private void _eyes() {
-    fill(#2E2E2E);
-
-    pushMatrix();
+    push();
     {
+      fill(#2E2E2E);
+      
       translate(-20, -70);
       ellipse(0, 0, 15, eyeHeight);
 
       translate(50, 0);
       ellipse(0, 0, 15, eyeHeight);
     }
-    popMatrix();
+    pop();
+  }
+
+  // Happy eyes
+  private void _happyEyes() {
+    push();
+    {
+      noFill();
+      stroke(#2E2E2E);
+      strokeWeight(7);
+      
+      translate(-20, -80);
+      beginShape();
+      vertex(-15, 15);
+      vertex(0, 0);
+      vertex(15, 15);
+      endShape();
+
+      translate(50, 0);
+      beginShape();
+      vertex(-15, 15);
+      vertex(0, 0);
+      vertex(15, 15);
+      endShape();
+    }
+    pop();
   }
 
   // Mouth

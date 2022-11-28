@@ -420,7 +420,12 @@ class Taman {
   void interactPuddle() {
     if (fox.posX >= 375 && fox.posX <= 570 &&
       fox.posY >= 500 && fox.posY <= 610) {
-      icon.exclamationIcon(475, 330, 11, true);
+      if (fox.currentState == fox.STATES[3] || (keyPressed && key == 32)) { // Space
+        // Fox is jumping
+        fox.currentState = fox.STATES[3];
+      } else {
+        icon.exclamationIcon(475, 330, 11, true);
+      }
     }
   }
 }
