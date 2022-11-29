@@ -296,7 +296,20 @@ class Taman {
 
       // rect(x, y, width, height);
       rectMode(CENTER);
+
       popMatrix();
+      push();
+      stroke(colorFence);
+      for (int i = 710; i < 860; i += 30){
+        int i2 = (i - 710) / 30;
+        strokeWeight(7);
+        line(710 + i2 * 30, 200, 710 + i2 * 30 + 20, 200);
+        strokeWeight(10);
+        line(710 + i2 * 30, 220, 710 + i2 * 30 + 20, 220);
+        strokeWeight(5);
+        line(710 + i2 * 30, 240, 710 + i2 * 30 + 20, 240);
+      }
+      pop();
     }
     pop();
   }

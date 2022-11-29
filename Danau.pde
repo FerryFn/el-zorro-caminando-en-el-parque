@@ -154,6 +154,18 @@ class Danau {
       // rect(x, y, width, height);
       rectMode(CENTER);
       popMatrix();
+      push();
+      stroke(colorFence);
+      for (int i = 260; i < 410; i += 30){
+        int i2 = (i - 260) / 30;
+        strokeWeight(7);
+        line(260 + i2 * 30, 230, 260 + i2 * 30 + 20, 230);
+        strokeWeight(10);
+        line(260 + i2 * 30, 250, 260 + i2 * 30 + 20, 250);
+        strokeWeight(5);
+        line(260 + i2 * 30, 270, 260 + i2 * 30 + 20, 270);
+      }
+      pop();
     }
     pop();
   }

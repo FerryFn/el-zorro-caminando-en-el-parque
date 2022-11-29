@@ -6,12 +6,16 @@ SoundFile audioRoger;
 // Images
 PImage imageRoger;
 
+// Fonts
+PFont font;
+
 // Character
 Fox fox = new Fox();
 
 // Others
 Hujan[] hujan = new Hujan[100];
 Icon icon = new Icon();
+Sign sign = new Sign();
 
 // Scene
 menu Menu = new menu();
@@ -31,6 +35,10 @@ void setup() {
 
   fox.posX = width / 2;
   fox.posY = height / 2;
+
+  // Font initialization
+  font = createFont("./fonts/Akshar-Bold.ttf", 72);
+  textFont(font);
 
   // Audio initialization
   audioRoger = new SoundFile(this, "./audio/roger.mp3");
@@ -56,6 +64,7 @@ void draw() {
     fox.control();
     fox.display();
   }
+  // sign.opened("DIMOHON UNTUK JANGAN BUANG SAMPAH SEMBARANGAN DI SEKITAR TAMAN ATAU DANAU!");
 
   fill(0);
   text( "x: " + mouseX + " y: " + mouseY, mouseX, mouseY);
