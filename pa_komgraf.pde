@@ -18,7 +18,7 @@ Icon icon = new Icon();
 Sign sign = new Sign();
 
 // Scene
-menu Menu = new menu();
+menu menu = new menu();
 Taman taman = new Taman(fox, icon, hujan);
 Danau danau = new Danau(fox, icon, hujan);
 
@@ -53,6 +53,7 @@ void setup() {
 void draw() {
   if (SceneControl.currentScene == 0) {
     // Menu
+    menu.start();
   } else if (SceneControl.currentScene == 1) {
     // Park
     taman.begin();
@@ -69,4 +70,8 @@ void draw() {
   fill(0);
   text( "x: " + mouseX + " y: " + mouseY, mouseX, mouseY);
   textSize(20);
+}
+
+void keyPressed(){
+  menu.keyPressed();
 }
