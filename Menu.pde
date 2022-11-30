@@ -39,7 +39,7 @@ class Menu {
           rect(290, 180+2*70, 220, 50);
           fill(0);
           text("Exit", 370, 215+2*70);
-          if (keyCode==ENTER) {
+          if (key == 32) {
             audioMenu.stop();
             scene=1;
           }
@@ -58,7 +58,7 @@ class Menu {
           rect(290, 180+2*70, 220, 50);
           fill(0);
           text("Exit", 370, 215+2*70);
-          if (keyCode==ENTER)
+          if (key == 32)
             scene=2;
         } else if (pilih == 3) {
           fill(255);
@@ -75,7 +75,7 @@ class Menu {
           rect(290, 180+2*70, 220, 50);
           fill(0);
           text("Exit", 370, 215+2*70);
-          if (keyCode==ENTER)
+          if (key == 32)
             scene=3;
         } else if (pilih > 3) {
           pilih = 1;

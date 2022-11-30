@@ -17,14 +17,14 @@ PFont font;
 Fox fox = new Fox();
 
 // Others
-Rain[] hujan = new Rain[100];
+Rain[] rain = new Rain[100];
 Icon icon = new Icon();
 Sign sign = new Sign();
 
 // Scene
 Menu menu = new Menu();
-Park park = new Park(fox, icon, hujan);
-Lake lake = new Lake(fox, icon, hujan);
+Park park = new Park(fox, icon, rain, sign);
+Lake lake = new Lake(fox, icon, rain, sign);
 
 // Initialization
 void setup() {
@@ -62,14 +62,14 @@ void setup() {
 
   // Rain initialization
   for (int i = 0; i < 100; i++) {
-    hujan[i] = new Rain(int(random(0, width)),
+    rain[i] = new Rain(int(random(0, width)),
       int(random(0, height)),
       int(random(6, 10)));
   }
 
   // Fox initial position
   fox.posX = -100;
-  fox.posY = height / 2;
+  fox.posY = 420;
 }
 
 void draw() {

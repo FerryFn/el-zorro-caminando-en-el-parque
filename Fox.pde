@@ -83,7 +83,7 @@ class Fox {
         leftArmRotate = 0;
         currentState = STATES[2];
       }
-    } else if (currentState != STATES[2] && currentState != STATES[3]) {
+    } else if (currentState != STATES[2] && currentState != STATES[3] && canControlFox) {
       rightWalkCycle = 0;
       leftWalkCycle = 0;
       bodyPosYRelative = 0;
@@ -725,7 +725,7 @@ class Fox {
     push();
     {
       fill(#2E2E2E);
-      
+
       translate(-20, -70);
       ellipse(0, 0, 15, eyeHeight);
 
@@ -742,7 +742,7 @@ class Fox {
       noFill();
       stroke(#2E2E2E);
       strokeWeight(7);
-      
+
       translate(-20, -80);
       beginShape();
       vertex(-15, 15);

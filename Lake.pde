@@ -1,9 +1,10 @@
 class Lake {
   // Other classes
   Fox fox;
-  Rain[] hujan;
   Icon icon;
-  
+  Sign sign;
+  Rain[] rain;
+
   // Audio
   SoundFile audioSpring;
 
@@ -11,6 +12,7 @@ class Lake {
   color colorBush1 = #4C8F4F;
   color colorBush2 = #36784E;
   color colorFence = #352E3D;
+  color colorGround = #7CAB6D;
   color colorLampLight = #FCC88D;
   color colorLampStructure = #24222E;
   color colorPath = #5A5A70;
@@ -23,15 +25,25 @@ class Lake {
   color colorWood1 = #DEB887;
   color colorWood2 = #A55B53;
 
-  public Lake(Fox tempFox, Icon tempIcon, Rain[] hjn) {
+  // Fox control on Lake interactables
+  int foxOriginalPosX = 0;
+  int foxOriginalPosY = 0;
+  boolean foxIsInteractingBench = false;
+  boolean foxIsInteractingGazebo = false;
+  boolean foxOriginalPosHasReverted = true;
+
+  // Constructor
+  public Lake(Fox tempFox, Icon tempIcon, Rain[] tempRain, Sign tempSign) {
     fox = tempFox;
-    hujan = hjn;
+    rain = tempRain;
     icon = tempIcon;
+    sign = tempSign;
   }
 
+  // Call this to play this scene
   void begin() {
 
-    background(#7CAB6D);
+    background(colorGround);
 
     // Scene controlling with the Fox
     boundaryControl();
@@ -114,8 +126,8 @@ class Lake {
   }
 
   void hujan() {
-    for (int i = 0; i < hujan.length; i++) {
-      hujan[i].display();
+    for (int i = 0; i < rain.length; i++) {
+      rain[i].display();
     }
   }
 
@@ -160,7 +172,7 @@ class Lake {
       popMatrix();
       push();
       stroke(colorFence);
-      for (int i = 260; i < 410; i += 30){
+      for (int i = 260; i < 410; i += 30) {
         int i2 = (i - 260) / 30;
         strokeWeight(7);
         line(260 + i2 * 30, 230, 260 + i2 * 30 + 20, 230);
@@ -225,40 +237,53 @@ class Lake {
     popMatrix();
   }
 
+  // Display a gazebo
   void gazebo(int x, int y, int z) {
     push();
     {
       translate(x, y, z);
       scale(1.3);
 
-      // Floor
-      fill(colorWood1);
-      ellipse(0, 0, 260, 60);
+      pushMatrix();
+      {
+        translate(0, 0, -1.1);
 
-      // Back wall
-      fill(colorTreeTrunk);
-      beginShape();
-      vertex(-130, 0);
-      bezierVertex(-80, -25, -75, -30, 0, -30);
-      bezierVertex(75, -30, 80, -25, 130, 0);
-      vertex(130, -60);
-      bezierVertex(80, -85, 75, -90, 0, -90);
-      bezierVertex(-75, -90, -80, -85, -130, -60);
-      endShape(CLOSE);
+        // Floor
+        fill(colorWood1);
+        ellipse(0, 0, 260, 60);
+
+        // Back wall
+        fill(colorTreeTrunk);
+        beginShape();
+        vertex(-130, 0);
+        bezierVertex(-80, -25, -75, -30, 0, -30);
+        bezierVertex(75, -30, 80, -25, 130, 0);
+        vertex(130, -60);
+        bezierVertex(80, -85, 75, -90, 0, -90);
+        bezierVertex(-75, -90, -80, -85, -130, -60);
+        endShape(CLOSE);
+      }
+      popMatrix();
 
       for (int i = 0; i < 2; i++) {
         if (i == 1) {
           scale(-1, 1);
         }
 
-        // Support columns
-        fill(colorWood1);
-        rect(-140, -160, 20, 220);
-        rect(-80, -160, 20, 200);
+        pushMatrix();
+        {
+          translate(0, 0, -1.1);
+          
+          // Support columns
+          fill(colorWood1);
+          rect(-140, -160, 20, 220);
+          rect(-80, -160, 20, 200);
 
-        // Back columns shadow
-        fill(0, 0, 0, 36);
-        rect(-80, -160, 20, 200);
+          // Back columns shadow
+          fill(0, 0, 0, 36);
+          rect(-80, -160, 20, 200);
+        }
+        popMatrix();
 
         // Front walls
         fill(colorWood2);
@@ -290,7 +315,8 @@ class Lake {
     }
     pop();
   }
-
+  
+  // Display a bench
   void bench(int x, int y, int z) {
     push();
     {
@@ -381,7 +407,7 @@ class Lake {
       fox.speed = fox.defaultSpeed;
     }
   }
-  
+
   // For controlling background music
   void bgmControl() {
     if (!audioSpring.isPlaying()) {
@@ -401,28 +427,86 @@ class Lake {
       }
     }
   }
-  
+
   // Interactable: Bench
   void interactBench() {
+    // If Fox can interact with the bench
     if (fox.posX >= 690 && fox.posX <= 710 &&
       fox.posY >= 550 && fox.posY <= 670 && !fox.isFacingRight) {
-      icon.exclamationIcon(630, 450, 13, true);
+      if (key == 32) { // Space key
+        // Store Fox's original location
+        if (!foxIsInteractingBench) {
+          foxOriginalPosX = fox.posX;
+          foxOriginalPosY = fox.posY;
+          foxOriginalPosHasReverted = false;
+          foxIsInteractingBench = true;
+        }
+
+        // Fox's sitting state on the bench
+        fox.currentState = fox.STATES[2];
+        fox.isFacingRight = true;
+        fox.posX = 670;
+        fox.posY = 575;
+      } else {
+        icon.exclamationIcon(630, 450, 13, true);
+      }
+    }
+
+    // If sitting on bench is cancelled
+    if (foxIsInteractingBench && !foxOriginalPosHasReverted && key != 32) {
+      fox.posX = foxOriginalPosX;
+      fox.posY = foxOriginalPosY;
+      foxOriginalPosHasReverted = true;
+      foxIsInteractingBench = false;
     }
   }
-  
+
   // Interactable: Gazebo
   void interactGazebo() {
+    // If Fox can interact with the gazebo
     if (fox.posX >= 600 && fox.posX <= 720 &&
       fox.posY >= 350 && fox.posY <= 375) {
-      icon.exclamationIcon(660, 150, 13, true);
+      if (key == 32) { // Space key
+        // Store Fox's original location
+        if (!foxIsInteractingGazebo) {
+          foxOriginalPosX = fox.posX;
+          foxOriginalPosY = fox.posY;
+          foxOriginalPosHasReverted = false;
+          foxIsInteractingGazebo = true;
+        }
+
+        // Fox's sitting state on the bench
+        fox.currentState = fox.STATES[2];
+
+        // Random Fox's sitting direction
+        fox.isFacingRight = int(random(2)) == 1;
+
+        // Random Fox's position
+        fox.posX = int(random(2)) == 1 ? 540 : 780;
+        fox.posY = 230;
+      } else {
+        icon.exclamationIcon(660, 150, 13, true);
+      }
+    }
+
+    // If sitting on gazebo is cancelled
+    if (foxIsInteractingGazebo && !foxOriginalPosHasReverted && key != 32) {
+      fox.posX = foxOriginalPosX;
+      fox.posY = foxOriginalPosY;
+      foxOriginalPosHasReverted = true;
+      foxIsInteractingGazebo = false;
     }
   }
-  
+
   // Interactable: Sign
   void interactSign() {
     if (fox.posX >= 240 && fox.posX <= 420 &&
       fox.posY >= 360 && fox.posY <= 380) {
-      icon.exclamationIcon(330, 170, 13, true);
+      if (key == 32) { // Space
+        sign.showSign("DIMOHON UNTUK JANGAN BUANG SAMPAH SEMBARANGAN DI SEKITAR TAMAN ATAU DANAU!");
+      } else {
+        icon.exclamationIcon(330, 170, 13, true);
+      }
     }
   }
 }

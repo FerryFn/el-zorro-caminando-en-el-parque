@@ -1,25 +1,27 @@
 class Park {
   // Other classes
   Fox fox;
-  Rain[] hujan;
   Icon icon;
+  Rain[] rain;
+  Sign sign;
 
   // Interactability: Roger
   PImage imageRoger;
   float imageRogerOpacity = 0;
   
   // Audio
-  SoundFile audioRoger;
+  SoundFile audioRoger; // Roger scene
   float audioRogerAmp = 0.01;
   int waitToRoger = 0;
   boolean audioRogerHasPlayed = false;
   
-  SoundFile audioSpring;
+  SoundFile audioSpring; // BGM
 
   // Color palette
   color colorBush1 = #4C8F4F;
   color colorBush2 = #36784E;
   color colorFence = #352E3D;
+  color colorGround = #7CAB6D;
   color colorLampLight = #FCC88D;
   color colorLampStructure = #24222E;
   color colorPath = #5A5A70;
@@ -32,17 +34,19 @@ class Park {
   color colorWood1 = #DEB887;
   color colorWood2 = #A55B53;
 
-  public Park(Fox tempFox, Icon tempIcon, Rain[] hjn) {
+  public Park(Fox tempFox, Icon tempIcon, Rain[] tempRain, Sign tempSign) {
     fox = tempFox;
-    hujan = hjn;
+    rain = tempRain;
     icon = tempIcon;
+    sign = tempSign;
   }
 
   // Call this to play scene
   void begin() {
-    background(#7CAB6D);
+    background(colorGround);
 
     // Scene controlling with the Fox
+    firstTimeControl();
     boundaryControl();
     layerControl();
     bgmControl();
@@ -161,8 +165,8 @@ class Park {
   }
 
   void hujan() {
-    for (int i = 0; i < hujan.length; i++) {
-      hujan[i].display();
+    for (int i = 0; i < rain.length; i++) {
+      rain[i].display();
     }
   }
 
@@ -317,6 +321,20 @@ class Park {
     }
     pop();
   }
+  
+  // For controlling first time play transition
+  // (Fox walking into the screen)
+  void firstTimeControl() {
+    if (SceneControl.isFirstTimePlayed) {
+      fox.canControlFox = false;
+      fox.currentState = fox.STATES[1];
+      fox.posX += 2;
+      if (fox.posX >= 100) {
+        fox.canControlFox = true;
+        SceneControl.isFirstTimePlayed = false;
+      }
+    }
+  }
 
   // For controlling which object is in front of other objects
   void layerControl() {
@@ -446,7 +464,11 @@ class Park {
   void interactSign() {
     if (fox.posX >= 685 && fox.posX <= 875 &&
       fox.posY >= 330 && fox.posY <= 340) {
-      icon.exclamationIcon(775, 150, 11, true);
+      if (key == 32) { // Space
+        sign.showSign("DANAU 500M KE ARAH TIMUR");
+      } else {
+        icon.exclamationIcon(775, 150, 11, true);
+      }
     }
   }
 
