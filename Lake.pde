@@ -1,7 +1,7 @@
-class Danau {
+class Lake {
   // Other classes
   Fox fox;
-  Hujan[] hujan;
+  Rain[] hujan;
   Icon icon;
   
   // Audio
@@ -23,7 +23,7 @@ class Danau {
   color colorWood1 = #DEB887;
   color colorWood2 = #A55B53;
 
-  public Danau(Fox tempFox, Icon tempIcon, Hujan[] hjn) {
+  public Lake(Fox tempFox, Icon tempIcon, Rain[] hjn) {
     fox = tempFox;
     hujan = hjn;
     icon = tempIcon;

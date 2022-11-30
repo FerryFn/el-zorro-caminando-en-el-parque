@@ -1,4 +1,5 @@
+// Scene control
 static class SceneControl {
-  // Scene control
+  // Scene currently viewed by player
   static int currentScene = 0;
 }

@@ -1,42 +1,47 @@
-class Sign{
+// Show sign scene
+class Sign {
+  // Color palette
   color colorWood1 = #DEB887;
   color colorWood2 = #A55B53;
-    String texts;
-
-    public void Sign(String text) {
-        texts = text;
-    }
-
-    void opened(String texts) {
-        signs();
-        text1(texts);
-    }
-
-    void signs() {
+  
+  // Use this to show the scene
+  void showSign(String textToBeShown) {
+    _showSignBackground();
+    _showText(textToBeShown);
+  }
+  
+  // Sign background
+  private void _showSignBackground() {
     push();
     {
-        noStroke();
-        translate(0, 0, 0);
-        pushMatrix();
+      noStroke();
+      translate(0, 0, 13);
+      pushMatrix();
+      {
         fill(colorWood2);
         rect(0, 0, width, height);
         fill(colorWood1);
         rect(50, 50, width-100, height-100, 30);
         rectMode(CENTER);
-        popMatrix();
+      }
+      popMatrix();
     }
     pop();
-    }
-
-    void text1(String text1) {
-    push();
-        translate(width / 2, height / 2, 2);
-        rectMode(CENTER);
-        textSize(72);
-        textAlign(CENTER, CENTER);
-        fill(#352E3D);
-        text(text1, 0, 0, 1000, 720);    
-    pop();
-    } 
+  }
   
+  // Text on the sign
+  private void _showText(String textToBeShown) {
+    push();
+    {
+      translate(width / 2, height / 2, 15);
+
+      fill(#352E3D);
+      rectMode(CENTER);
+      textSize(72);
+      textAlign(CENTER, CENTER);
+
+      text(textToBeShown, 0, 0, 1000, 720);
+    }
+    pop();
+  }
 }

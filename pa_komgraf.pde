@@ -17,14 +17,14 @@ PFont font;
 Fox fox = new Fox();
 
 // Others
-Hujan[] hujan = new Hujan[100];
+Rain[] hujan = new Rain[100];
 Icon icon = new Icon();
 Sign sign = new Sign();
 
 // Scene
 Menu menu = new Menu();
-Taman taman = new Taman(fox, icon, hujan);
-Danau danau = new Danau(fox, icon, hujan);
+Park park = new Park(fox, icon, hujan);
+Lake lake = new Lake(fox, icon, hujan);
 
 // Initialization
 void setup() {
@@ -49,27 +49,27 @@ void setup() {
   audioSpring.amp(0.5);
 
   // Class audio assignments
-  danau.audioSpring = audioSpring;
+  lake.audioSpring = audioSpring;
   menu.audioMenu = audioMenu;
   menu.audioMenuClick = audioMenuClick;
   menu.audioMenuMove = audioMenuMove;
-  taman.audioRoger = audioRoger;
-  taman.audioSpring = audioSpring;
+  park.audioRoger = audioRoger;
+  park.audioSpring = audioSpring;
 
   // Image initializaion
   imageRoger = loadImage("./images/roger.jpg");
-  taman.imageRoger = imageRoger;
+  park.imageRoger = imageRoger;
 
   // Rain initialization
   for (int i = 0; i < 100; i++) {
-    hujan[i] = new Hujan(int(random(0, width)),
+    hujan[i] = new Rain(int(random(0, width)),
       int(random(0, height)),
       int(random(6, 10)));
   }
 
   // Fox initial position
-  fox.posX = 490;
-  fox.posY = 540;
+  fox.posX = -100;
+  fox.posY = height / 2;
 }
 
 void draw() {
@@ -78,16 +78,16 @@ void draw() {
     menu.start();
   } else if (SceneControl.currentScene == 1) {
     // Park
-    taman.begin();
+    park.begin();
     fox.control();
     fox.display();
   } else if (SceneControl.currentScene == 2) {
     // Lake
-    danau.begin();
+    lake.begin();
     fox.control();
     fox.display();
   }
-  
+
   // Mouse coordinate (Delete when completed)
   pushMatrix();
   {

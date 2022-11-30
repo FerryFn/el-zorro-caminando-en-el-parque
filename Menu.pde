@@ -1,11 +1,14 @@
-int pilih = 1;
-int scene = 0;
-int putar = 1;
-
+// Menu scene
 class Menu {
+  // Audio
   SoundFile audioMenu;
   SoundFile audioMenuClick;
   SoundFile audioMenuMove;
+  
+  // Menu control
+  int pilih = 1;
+  int scene = 0;
+  int putar = 1;
 
   void start() {
     // To start the audio
@@ -120,7 +123,7 @@ class Menu {
     if (SceneControl.currentScene != 0) {
       return;
     }
-    
+
     if (key==CODED)
     {
       if (keyCode==UP) {

@@ -1,11 +1,11 @@
-class Hujan {
+class Rain {
   int x1;
   int y1;
   int x2;
   int y2;
   int s;
 
-  public Hujan(int x, int y, int sp) {
+  public Rain(int x, int y, int sp) {
     x1 = x;
     y1 = y;
     s = sp;

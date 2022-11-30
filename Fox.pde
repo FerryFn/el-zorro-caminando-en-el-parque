@@ -1,3 +1,4 @@
+// The Fox character
 class Fox {
   // Fox animation states
   final String[] STATES = {
@@ -11,6 +12,7 @@ class Fox {
   int speed = 4;
   int defaultSpeed = 4;
   boolean isFacingRight = true;
+  boolean canControlFox = true;
 
   // Fox position on canvas
   int posX = 0;
@@ -61,7 +63,7 @@ class Fox {
 
   // Input from user control
   void control() {
-    if (keyPressed) {
+    if (keyPressed && canControlFox) {
       if (keyCode == RIGHT) {
         posX += speed;
         currentState = STATES[1];
@@ -419,7 +421,6 @@ class Fox {
       isFalling = !isFalling;
     }
   }
-
 
   // Body
   private void _body() {

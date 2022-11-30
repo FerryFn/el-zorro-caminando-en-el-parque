@@ -1,7 +1,7 @@
-class Taman {
+class Park {
   // Other classes
   Fox fox;
-  Hujan[] hujan;
+  Rain[] hujan;
   Icon icon;
 
   // Interactability: Roger
@@ -32,7 +32,7 @@ class Taman {
   color colorWood1 = #DEB887;
   color colorWood2 = #A55B53;
 
-  public Taman(Fox tempFox, Icon tempIcon, Hujan[] hjn) {
+  public Park(Fox tempFox, Icon tempIcon, Rain[] hjn) {
     fox = tempFox;
     hujan = hjn;
     icon = tempIcon;
