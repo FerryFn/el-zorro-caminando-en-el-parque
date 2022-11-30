@@ -3,6 +3,9 @@ class Danau {
   Fox fox;
   Hujan[] hujan;
   Icon icon;
+  
+  // Audio
+  SoundFile audioSpring;
 
   // Color palette
   color colorBush1 = #4C8F4F;
@@ -33,6 +36,7 @@ class Danau {
     // Scene controlling with the Fox
     boundaryControl();
     layerControl();
+    bgmControl();
 
     // Interactables in the scene
     interactGoToCentralPark();
@@ -375,6 +379,13 @@ class Danau {
       fox.stopWalk();
     } else {
       fox.speed = fox.defaultSpeed;
+    }
+  }
+  
+  // For controlling background music
+  void bgmControl() {
+    if (!audioSpring.isPlaying()) {
+      audioSpring.play();
     }
   }
 

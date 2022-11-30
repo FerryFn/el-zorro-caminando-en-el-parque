@@ -7,11 +7,14 @@ class Taman {
   // Interactability: Roger
   PImage imageRoger;
   float imageRogerOpacity = 0;
-
+  
+  // Audio
   SoundFile audioRoger;
   float audioRogerAmp = 0.01;
   int waitToRoger = 0;
   boolean audioRogerHasPlayed = false;
+  
+  SoundFile audioSpring;
 
   // Color palette
   color colorBush1 = #4C8F4F;
@@ -42,6 +45,7 @@ class Taman {
     // Scene controlling with the Fox
     boundaryControl();
     layerControl();
+    bgmControl();
 
     // Interactables in the scene
     interactGoToLake();
@@ -359,6 +363,19 @@ class Taman {
       fox.stopWalk();
     } else {
       fox.speed = fox.defaultSpeed;
+    }
+  }
+  
+  // For controlling bgm
+  void bgmControl() {
+    // Play BGM
+    if (!audioSpring.isPlaying() && !audioRoger.isPlaying()) {
+      audioSpring.play();
+    }
+    
+    // Pause BGM when Roger's plays
+    if (audioRoger.isPlaying()) {
+      audioSpring.pause();
     }
   }
 
