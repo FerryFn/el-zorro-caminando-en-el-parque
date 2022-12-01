@@ -1,3 +1,5 @@
+Loading loading = new Loading();
+
 // Menu scene
 class Menu {
   // Audio
@@ -13,8 +15,9 @@ class Menu {
   void start() {
     // To start the audio
     bgmControl();
-
+  
     background(#D6A447);
+    judul();
     pushMatrix();
     {
       scale(1.5);
@@ -85,31 +88,28 @@ class Menu {
 
         if (scene==1)
         {
-          SceneControl.currentScene=1;
+          pushMatrix();
+          {
+            translate(0,-50,0);
+            loading.load();
+          }
+          popMatrix();
         }
         if (scene==2)
         {
           background(#935762);
           text("Scene #2", 350, 50);
+          if (keyCode==BACKSPACE)
+            scene=0;
         }
         if (scene==3)
         {
           exit();
         }
-        if (scene > 0)
-        {
-          triangle(10, 10, 20, 0, 20, 20);
-          rect(20, 6, 20, 8);
-          if (keyCode==BACKSPACE)
-            scene=0;
-        }
         popMatrix();
       }
     }
     popMatrix();
-    judul();
-
-
     putar++;
   }
 

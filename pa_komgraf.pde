@@ -26,6 +26,7 @@ Menu menu = new Menu();
 Park park = new Park(fox, icon, rain, sign);
 Lake lake = new Lake(fox, icon, rain, sign);
 
+ 
 // Initialization
 void setup() {
   size(1280, 720, P3D);
