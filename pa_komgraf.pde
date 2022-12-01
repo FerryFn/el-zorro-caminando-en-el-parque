@@ -20,13 +20,13 @@ Fox fox = new Fox();
 Rain[] rain = new Rain[100];
 Icon icon = new Icon();
 Sign sign = new Sign();
+Credit credit = new Credit();
 
 // Scene
 Menu menu = new Menu();
 Park park = new Park(fox, icon, rain, sign);
 Lake lake = new Lake(fox, icon, rain, sign);
 
- 
 // Initialization
 void setup() {
   size(1280, 720, P3D);
