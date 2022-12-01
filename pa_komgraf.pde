@@ -20,7 +20,6 @@ Fox fox = new Fox();
 Rain[] rain = new Rain[100];
 Icon icon = new Icon();
 Sign sign = new Sign();
-Credit credit = new Credit();
 
 // Scene
 Menu menu = new Menu();

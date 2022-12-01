@@ -4,31 +4,14 @@ class Credit{
   
   // Use this to show the scene
   void showCredit() {
-    _showBackground();
     _showText();
-  }
-  
-  // Background
-  private void _showBackground() {
-    push();
-    {
-      noStroke();
-      translate(0, 0, 13);
-      pushMatrix();
-      {
-        fill(background1);
-        rect(0, 0, width, height);
-        rectMode(CENTER);
-      }
-      popMatrix();
-    }
-    pop();
   }
   
   // Text 
   private void _showText() {
     push();
     {
+      background(background1);
       translate(width / 2, height / 2, 15);
 
       fill(#352E3D);

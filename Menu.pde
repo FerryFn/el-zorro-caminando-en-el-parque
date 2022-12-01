@@ -1,4 +1,5 @@
 Loading loading = new Loading();
+Credit credit = new Credit();
 
 // Menu scene
 class Menu {
@@ -97,10 +98,14 @@ class Menu {
         }
         if (scene==2)
         {
-          background(#935762);
-          text("Scene #2", 350, 50);
-          if (keyCode==BACKSPACE)
-            scene=0;
+          push();
+            credit.showCredit();
+            // background(#935762);
+            // text("Scene #2", 350, 50);
+            if (keyCode==BACKSPACE)
+              scene=0;          
+          pop();
+
         }
         if (scene==3)
         {
