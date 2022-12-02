@@ -98,13 +98,15 @@ class Menu {
         }
         if (scene==2)
         {
-          push();
+          pushMatrix();
+            scale(0.7);
+            translate(230,50);
             credit.showCredit();
             // background(#935762);
             // text("Scene #2", 350, 50);
             if (keyCode==BACKSPACE)
               scene=0;          
-          pop();
+          popMatrix();
 
         }
         if (scene==3)
