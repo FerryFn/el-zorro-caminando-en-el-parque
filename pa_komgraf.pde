@@ -88,15 +88,15 @@ void draw() {
     fox.display();
   }
 
-  // Mouse coordinate (Delete when completed)
-  pushMatrix();
-  {
-    translate(0, 0, 15);
-    fill(0);
-    text( "x: " + mouseX + " y: " + mouseY, mouseX, mouseY);
-    textSize(20);
-  }
-  popMatrix();
+  // // Mouse coordinate (Delete when completed)
+  // pushMatrix();
+  // {
+  //   translate(0, 0, 15);
+  //   fill(0);
+  //   text( "x: " + mouseX + " y: " + mouseY, mouseX, mouseY);
+  //   textSize(20);
+  // }
+  // popMatrix();
 }
 
 // Non-continuous key presses
