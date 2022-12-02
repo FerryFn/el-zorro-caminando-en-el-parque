@@ -99,8 +99,8 @@ class Menu {
         if (scene==2)
         {
           pushMatrix();
-            scale(0.7);
             translate(230,50);
+            scale(0.7);
             credit.showCredit();
             // background(#935762);
             // text("Scene #2", 350, 50);

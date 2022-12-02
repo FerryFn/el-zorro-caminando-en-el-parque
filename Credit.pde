@@ -9,7 +9,7 @@ class Credit{
   
   // Text 
   private void _showText() {
-    pushMatrix();
+    push();
     {
       background(background1);
       translate(width / 2, height / 2, 15);
@@ -17,17 +17,17 @@ class Credit{
       fill(#352E3D);
       rectMode(CENTER);
       // Title
-      pushMatrix();
+      push();
       textSize(72);
       textAlign(CENTER, CENTER);
       text("Credits", 0, -300, 1000, 720);
-      popMatrix();
-      pushMatrix();
+      pop();
+      push();
       textSize(44);
       // Sub Head title
       textAlign(CENTER, CENTER);
       text("B1 Group 4", 0, -230, 1000, 720);
-      popMatrix();
+      pop();
       // Sub titles
       TextSub("Muhammad Nizar", 250, -180);
       TextSub("Leader", -200, -180);
@@ -38,11 +38,11 @@ class Credit{
       TextSub("Muhammad Basith Algiffari", 250, -90);
       TextSub("Member 3", -200, -90);
       // sub Head title 1
-      pushMatrix();
+      push();
       textSize(44);
       textAlign(CENTER, CENTER);
       text("Musics :", 0, -50, 1000, 720);
-      popMatrix();
+      pop();
       // Sub titles 1
       TextSub("Harvest Moon BTN", 250, -10);
       TextSub("Spring Theme", -200, -10);
@@ -53,23 +53,23 @@ class Credit{
       TextSub("broumbroum", 250, 80);
       TextSub("Menu Validated", -200, 80);
       // sub Head title 2
-      pushMatrix();
+      push();
       textSize(44);
       textAlign(CENTER, CENTER);
       text("Images :", 0, 120, 1000, 720);
-      popMatrix();
+      pop();
       // sub titles 2
       TextSub("WolfsRoad", 250, 160);
       TextSub("Roger Sumatera", -200, 160);
     }
-    popMatrix();
+    pop();
   }
   void TextSub(String nama, int x, int y){
-    pushMatrix();
+    push();
       translate(350, 0);
       textSize(36);
       textAlign(LEFT, CENTER);
       text(nama, x, y, 1000, 720);
-    popMatrix();
+    pop();
   }
 }
