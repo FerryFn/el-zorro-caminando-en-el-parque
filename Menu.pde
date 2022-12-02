@@ -7,7 +7,7 @@ class Menu {
   SoundFile audioMenu;
   SoundFile audioMenuClick;
   SoundFile audioMenuMove;
-  
+
   // Menu control
   int pilih = 1;
   int scene = 0;
@@ -16,7 +16,7 @@ class Menu {
   void start() {
     // To start the audio
     bgmControl();
-  
+
     background(#D6A447);
     judul();
     pushMatrix();
@@ -43,10 +43,6 @@ class Menu {
           rect(290, 180+2*70, 220, 50);
           fill(0);
           text("Exit", 370, 215+2*70);
-          if (key == 32) {
-            audioMenu.stop();
-            scene=1;
-          }
         } else if (pilih == 2) {
           fill(255);
           rect(290, 180+0*70, 220, 50);
@@ -62,8 +58,6 @@ class Menu {
           rect(290, 180+2*70, 220, 50);
           fill(0);
           text("Exit", 370, 215+2*70);
-          if (key == 32)
-            scene=2;
         } else if (pilih == 3) {
           fill(255);
           rect(290, 180+0*70, 220, 50);
@@ -79,8 +73,6 @@ class Menu {
           rect(290, 180+2*70, 220, 50);
           fill(0);
           text("Exit", 370, 215+2*70);
-          if (key == 32)
-            scene=3;
         } else if (pilih > 3) {
           pilih = 1;
         } else if (pilih < 1) {
@@ -89,9 +81,10 @@ class Menu {
 
         if (scene==1)
         {
+          audioMenu.stop();
           pushMatrix();
           {
-            translate(0,-50,0);
+            translate(0, -50, 0);
             loading.load();
           }
           popMatrix();
@@ -99,15 +92,10 @@ class Menu {
         if (scene==2)
         {
           pushMatrix();
-            scale(0.7);
-            translate(230,50);
-            credit.showCredit();
-            // background(#935762);
-            // text("Scene #2", 350, 50);
-            if (keyCode==BACKSPACE)
-              scene=0;          
+          scale(0.7);
+          translate(230, 50);
+          credit.showCredit();
           popMatrix();
-
         }
         if (scene==3)
         {
@@ -127,7 +115,20 @@ class Menu {
   }
 
   void keyPressed() {
-    if (SceneControl.currentScene != 0) {
+    if (key == 32 && scene != 1) {
+      audioMenuClick.play();
+      if (scene == 2) {
+        scene = 0;
+      } else if (pilih == 1) {
+        scene = 1;
+      } else if (pilih == 2) {
+        scene = 2;
+      } else if (pilih == 3) {
+        scene = 3;
+      }
+    }
+
+    if (scene != 0) {
       return;
     }
 
@@ -144,10 +145,6 @@ class Menu {
 
     if (key == CODED && (keyCode == UP || keyCode == DOWN)) {
       audioMenuMove.play();
-    }
-
-    if (key == CODED && keyCode == ENTER) {
-      audioMenuClick.play();
     }
   }
 

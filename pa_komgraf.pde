@@ -45,6 +45,8 @@ void setup() {
 
   // Audio volume
   audioMenu.amp(0.5);
+  audioMenuClick.amp(0.5);
+  audioMenuMove.amp(0.5);
   audioRoger.amp(0.5);
   audioSpring.amp(0.5);
 
@@ -87,19 +89,11 @@ void draw() {
     fox.control();
     fox.display();
   }
-
-  // // Mouse coordinate (Delete when completed)
-  // pushMatrix();
-  // {
-  //   translate(0, 0, 15);
-  //   fill(0);
-  //   text( "x: " + mouseX + " y: " + mouseY, mouseX, mouseY);
-  //   textSize(20);
-  // }
-  // popMatrix();
 }
 
 // Non-continuous key presses
 void keyPressed() {
-  menu.keyPressed();
+  if (SceneControl.currentScene == 0) {
+    menu.keyPressed();
+  }
 }
