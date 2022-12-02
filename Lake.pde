@@ -56,36 +56,46 @@ class Lake {
     interactGazebo();
     interactSign();
 
-    langit();
-    hujan();
-    jalanan();
-    batu(0, 0, 30, 30);
-    batu(20, 0, 50, 50);
-    batu(50, 0, 40, 40);
+    // Calling function Sky
+    sky();
+    // Calling function Raining
+    raining();
+    // Calling function road
+    road();
 
-    batu(-20, 40, 30, 30);
-    batu(-40, 40, 50, 50);
-    batu(-90, 60, 40, 40);
+    // Calling function Rocks
+    rock(0, 0, 30, 30);
+    rock(20, 0, 50, 50);
+    rock(50, 0, 40, 40);
 
-    batu(-80, 440, 30, 30);
-    batu(-100, 440, 50, 50);
-    batu(-140, 460, 40, 40);
+    rock(-20, 40, 30, 30);
+    rock(-40, 40, 50, 50);
+    rock(-90, 60, 40, 40);
 
+    rock(-80, 440, 30, 30);
+    rock(-100, 440, 50, 50);
+    rock(-140, 460, 40, 40);
+
+    // Calling function Lake
     lake();
 
-    semak(160, -40, 0, colorBush2, 1);
-    semak(200, -40, 0, colorBush2, 1);
-    semak(-20, -35, 0, colorBush2, 1);
-    semak(20, -35, 0, colorBush2, 1);
-    semak(60, -30, 0, colorBush1, 1);
-    semak(100, -30, 0, colorBush1, 1);
-    semak(-100, -30, 0, colorBush1, 1);
+    // Calling function Bushes
+    bush(160, -40, 0, colorBush2, 1);
+    bush(200, -40, 0, colorBush2, 1);
+    bush(-20, -35, 0, colorBush2, 1);
+    bush(20, -35, 0, colorBush2, 1);
+    bush(60, -30, 0, colorBush1, 1);
+    bush(100, -30, 0, colorBush1, 1);
+    bush(-100, -30, 0, colorBush1, 1);
 
-    batangPohonKecil(200, -320, colorTreeTrunk, 0.8);
+    // Calling function small trunk
+    smallTrunk(200, -320, colorTreeTrunk, 0.8);
 
     push();
     fill(colorTreeTrunk);
+    // Trunk Branch
     quad(190, 120, 260, 0, 290, 0, 190, 140);
+    // leaf for tree
     fill(colorBush2);
     ellipse(40, 20, 100, 100);
     ellipse(70, 20, 100, 100);
@@ -97,21 +107,26 @@ class Lake {
     ellipse(310, 30, 100, 100);
     pop();
 
-    semak(50, 60, 9, colorBush2, 2);
-    semak(-100, 60, 9, colorBush1, 2);
+    // Calling Function of bushes
+    bush(50, 60, 9, colorBush2, 2);
+    bush(-100, 60, 9, colorBush1, 2);
 
-    semak(-180, 150, 9, colorBush2, 2);
-    semak(-140, 150, 9, colorBush2, 2);
+    bush(-180, 150, 9, colorBush2, 2);
+    bush(-140, 150, 9, colorBush2, 2);
 
-    semak(0, 150, 9, colorBush1, 2);
-    semak(40, 150, 9, colorBush1, 2);
+    bush(0, 150, 9, colorBush1, 2);
+    bush(40, 150, 9, colorBush1, 2);
 
+    // Calling function of sign
     sign(0, 0, 5);
+    // Calling function gazebo
     gazebo(660, 250, 3);
+    // Calling function bench
     bench(650, 580, 7);
   }
 
-  void langit() {
+  // display sky
+  void sky() {
     push();
     {
       noStroke();
@@ -125,13 +140,16 @@ class Lake {
     pop();
   }
 
-  void hujan() {
+  // display rain
+  void raining() {
     for (int i = 0; i < rain.length; i++) {
+      // Calling the rain method from rain class and input the length to i
       rain[i].display();
     }
   }
 
-  void jalanan() {
+  // display road
+  void road() {
     pushMatrix();
     {
       beginShape();
@@ -145,6 +163,8 @@ class Lake {
     }
     popMatrix();
   }
+
+  // display lake
   void lake() {
     push();
     {
@@ -154,6 +174,8 @@ class Lake {
     pop();
   }
 
+
+  // display sign
   void sign(int x, int y, int z) {
     push();
     {
@@ -186,7 +208,8 @@ class Lake {
     pop();
   }
 
-  void semak(int x, int y, int z, color g, float scale) {
+  // display bush
+  void bush(int x, int y, int z, color g, float scale) {
     //dibungkus pake quad
     pushMatrix();
     {
@@ -205,7 +228,8 @@ class Lake {
     popMatrix();
   }
 
-  void batangPohonKecil(int x, int y, color b, float scale) {
+  // display small trunk
+  void smallTrunk(int x, int y, color b, float scale) {
     pushMatrix();
     {
       scale(scale);
@@ -227,7 +251,8 @@ class Lake {
     popMatrix();
   }
 
-  void batu(int x, int y, int w, int h) {
+  // display rock
+  void rock(int x, int y, int w, int h) {
     pushMatrix();
     {
       translate(x, y);

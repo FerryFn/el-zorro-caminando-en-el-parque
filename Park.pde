@@ -34,6 +34,7 @@ class Park {
   color colorWood1 = #DEB887;
   color colorWood2 = #A55B53;
 
+  // make a constructor for park
   public Park(Fox tempFox, Icon tempIcon, Rain[] tempRain, Sign tempSign) {
     fox = tempFox;
     rain = tempRain;
@@ -57,11 +58,14 @@ class Park {
     interactSign();
     interactPuddle();
 
-    langit();
+    // Calling function Sky
+    sky();
+    // Calling function Rain
+    raining();
+    // Calling function Road
+    road();
 
-    hujan();
-    jalanan();
-
+    // puddles
     push();
     {
       fill(colorWater);
@@ -71,10 +75,12 @@ class Park {
     }
     pop();
 
-
-    batangPohonKecil(200, -250, colorTreeTrunk, 0.5);
-    batangPohonKecil(600, -250, colorTreeTrunk, 0.5);
-    batangPohonKecil(800, -250, colorTreeTrunk, 0.5);
+    // Calling Function of small trunks
+    smallTrunk(200, -250, colorTreeTrunk, 0.5);
+    smallTrunk(600, -250, colorTreeTrunk, 0.5);
+    smallTrunk(800, -250, colorTreeTrunk, 0.5);
+    
+    // leaf for tree
     push();
     {
       fill(colorBush2);
@@ -91,18 +97,22 @@ class Park {
       ellipse(430, 30, 120, 100);
     }
     pop();
+    
+    // Calling Function Bushes
+    bush(160, -40, 0, colorBush2, 1);
+    bush(200, -40, 0, colorBush2, 1);
+    bush(-20, -35, 0, colorBush2, 1);
+    bush(20, -35, 0, colorBush2, 1);
+    bush(280, -35, 0, colorBush1, 1);
+    bush(60, -30, 0, colorBush1, 1);
+    bush(100, -30, 0, colorBush1, 1);
+    bush(-100, -30, 0, colorBush1, 1);
 
-    semak(160, -40, 0, colorBush2, 1);
-    semak(200, -40, 0, colorBush2, 1);
-    semak(-20, -35, 0, colorBush2, 1);
-    semak(20, -35, 0, colorBush2, 1);
-    semak(280, -35, 0, colorBush1, 1);
-    semak(60, -30, 0, colorBush1, 1);
-    semak(100, -30, 0, colorBush1, 1);
-    semak(-100, -30, 0, colorBush1, 1);
-
-    batangPohonKecil(1450, -260, colorTreeTrunk, 0.5);
-    batangPohonKecil(1750, -280, colorTreeTrunk, 0.5);
+    // Calling Function of sec small trunks
+    smallTrunk(1450, -260, colorTreeTrunk, 0.5);
+    smallTrunk(1750, -280, colorTreeTrunk, 0.5);
+    
+    // leaf for tree
     push();
     {
       fill(colorBush2);
@@ -115,28 +125,36 @@ class Park {
       ellipse(920, 30, 100, 100);
     }
     pop();
-    semak(600, -80, 0, colorBush2, 1);
-    semak(520, -80, 0, colorBush1, 1);
-    semak(680, -80, 0, colorBush1, 1);
-    semak(720, -80, 0, colorBush1, 1);
 
-    semak(-180, 150, 9, colorBush1, 2);
-    semak(-140, 150, 9, colorBush1, 2);
+    // Calling Function of bushes
+    bush(600, -80, 0, colorBush2, 1);
+    bush(520, -80, 0, colorBush1, 1);
+    bush(680, -80, 0, colorBush1, 1);
+    bush(720, -80, 0, colorBush1, 1);
 
-    pagar(0, 0);
+    bush(-180, 150, 9, colorBush1, 2);
+    bush(-140, 150, 9, colorBush1, 2);
 
-    lampu(500, 320, 3);
-    lampu(50, 500, 5);
+    // Calling Function Fence
+    fence(0, 0);
 
-    semak(950, 60, 7, colorBush2, 2);
-    semak(800, 60, 7, colorBush1, 2);
+    // Calling Function Park Lamp
+    parkLamp(500, 320, 3);
+    parkLamp(50, 500, 5);
 
-    batangPohonBesar(1100, -210, 7, colorTreeTrunk, 1);
+    // Calling Function Bushes
+    bush(950, 60, 7, colorBush2, 2);
+    bush(800, 60, 7, colorBush1, 2);
+
+    // Calling Function Big Trunk
+    bigTrunk(1100, -210, 7, colorTreeTrunk, 1);
     push();
     {
       translate(0, 0, 8);
+      //Trunk Branch
       fill(colorTreeTrunk);
       quad(1070, 240, 950, 110, 980, 110, 1070, 170);
+      //Leaf for Tree
       fill(colorBush1);
       ellipse(970, 50, 200, 200);
       ellipse(1070, 25, 200, 200);
@@ -144,10 +162,12 @@ class Park {
       ellipse(1230, 60, 200, 200);
     }
     pop();
+    // Calling Function Sign
     sign(0, 0, 3);
   }
 
-  void langit() {
+  // display sky
+  void sky() {
     push();
     noStroke();
     fill(colorSky);
@@ -163,14 +183,16 @@ class Park {
 
     pop();
   }
-
-  void hujan() {
+  // display rain
+  void raining() {
     for (int i = 0; i < rain.length; i++) {
+      // Calling the rain method from rain class and input the length to i
       rain[i].display();
     }
   }
 
-  void jalanan() {
+  // display road
+  void road() {
     pushMatrix();
     {
       beginShape();
@@ -185,8 +207,9 @@ class Park {
     popMatrix();
   }
 
-  void semak(int x, int y, int z, color g, float scale) {
-    //dibungkus pake quad
+  // Display Bush
+  void bush(int x, int y, int z, color g, float scale) {
+    // wrapped with quad
     pushMatrix();
     {
       translate(x, y, z);
@@ -204,21 +227,22 @@ class Park {
     popMatrix();
   }
 
-  void batangPohonKecil(int x, int y, color b, float scale) {
+  //Display small trunk
+  void smallTrunk(int x, int y, color b, float scale) {
     pushMatrix();
     {
       scale(scale);
       translate(x, y);
       fill(b);
-      //pohon kanan
+      // right trunk
       beginShape();
-      vertex(20, 300); // titik pertama
+      vertex(20, 300); // first point
       bezierVertex(100, 250, 10, 480, 80, 680); // membuat agar baris / garis melengkung
-      vertex(20, 680); // titik terakhir
+      vertex(20, 680); // last point
       endShape();
-      //pohon kiri
+      // left trunk
       beginShape();
-      vertex(20, 300); // titik pertama
+      vertex(20, 300); // first point
       bezierVertex(-100, 250, -10, 480, -80, 680); // membuat agar baris / garis melengkung
       vertex(20, 680); // titik terakhir
       endShape();
@@ -226,29 +250,31 @@ class Park {
     popMatrix();
   }
 
-  void batangPohonBesar(int x, int y, int z, color b, float scale) {
+  //display big trunk
+  void bigTrunk(int x, int y, int z, color b, float scale) {
     pushMatrix();
     {
       scale(scale);
       translate(x, y, z);
       fill(b);
-      //pohon kanan
+      // right trunk
       beginShape();
-      vertex(20, 300); // titik pertama
+      vertex(20, 300); // first point
       bezierVertex(100, 250, 10, 680, 80, 880); // membuat agar baris / garis melengkung
-      vertex(20, 880); // titik terakhir
+      vertex(20, 880); // last point
       endShape();
-      //pohon kiri
+      // left trunk
       beginShape();
-      vertex(20, 300); // titik pertama
+      vertex(20, 300); // first point
       bezierVertex(-100, 250, -10, 680, -80, 880); // membuat agar baris / garis melengkung
-      vertex(20, 880); // titik terakhir
+      vertex(20, 880); // last point
       endShape();
     }
     popMatrix();
   }
 
-  void pagar(int x, int y) {
+  // display fence
+  void fence(int x, int y) {
     push();
     {
       translate(x, y);
@@ -266,7 +292,8 @@ class Park {
     pop();
   }
 
-  void lampu(int x, int y, int z) {
+  // display park lamp
+  void parkLamp(int x, int y, int z) {
     push();
     {
       translate(x, y, z);
@@ -289,6 +316,7 @@ class Park {
     }
   }
 
+  // display sign
   void sign(int x, int y, int z) {
     push();
     {

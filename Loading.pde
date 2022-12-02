@@ -18,7 +18,7 @@ class Loading{
     rect(450, 400, 400, 30);
     fill(0);
     rect(452, 402, w, 27);
-    w += 10;
+    w += 80;
     if (w > 400) {
       //w = 0;
       SceneControl.currentScene=1;

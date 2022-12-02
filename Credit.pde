@@ -14,7 +14,7 @@ class Credit{
       background(background1);
       translate(width / 2, height / 2, 15);
 
-      fill(#352E3D);
+      fill(#FFFFFF);
       rectMode(CENTER);
       // Title
       push();
@@ -52,15 +52,26 @@ class Credit{
       TextSub("Menu Changed", -200, 50);
       TextSub("broumbroum", 250, 80);
       TextSub("Menu Validated", -200, 80);
+      TextSub("Raffa Affar", 250, 110);
+      TextSub("Tiara", -200, 110);
       // sub Head title 2
       push();
       textSize(44);
       textAlign(CENTER, CENTER);
-      text("Images :", 0, 120, 1000, 720);
+      text("Images :", 0, 150, 1000, 720);
       pop();
       // sub titles 2
-      TextSub("WolfsRoad", 250, 160);
-      TextSub("Roger Sumatera", -200, 160);
+      TextSub("WolfsRoad", 250, 180);
+      TextSub("Roger Sumatera", -200, 180);
+      // sub Head title 3
+      push();
+      textSize(44);
+      textAlign(CENTER, CENTER);
+      text("Reference :", 0, 220, 1000, 720);
+      pop();
+      // sub titles 3
+      TextSub("yumogou", 250, 260);
+      TextSub("Raining fallsdown", -200, 260);
     }
     pop();
   }

@@ -93,7 +93,22 @@ void draw() {
 
 // Non-continuous key presses
 void keyPressed() {
+  // Menu screen control
   if (SceneControl.currentScene == 0) {
     menu.keyPressed();
+  }
+
+  // Back to menu, from the park
+  // Regresar al menu, desde el parque
+  if ((SceneControl.currentScene == 1 ||
+    SceneControl.currentScene == 2) &&
+    keyCode == BACKSPACE) {
+    SceneControl.currentScene = 0;
+    SceneControl.isFirstTimePlayed = true;
+    fox.posX = -100;
+    fox.posY = 420;
+    menu.pilih = 1;
+    menu.scene = 0;
+    audioSpring.stop();
   }
 }
