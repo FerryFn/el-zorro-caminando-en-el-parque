@@ -399,6 +399,18 @@ class Park {
       (fox.posX > 650 && fox.posX < 920 && fox.posY < 330 && (fox.posY >= 300 && keyCode == DOWN))) {
       // Sign boundary
       fox.stopWalk();
+    } else if (((fox.posX >= 480 && keyCode == RIGHT) && fox.posX < 515 && fox.posY < 325 && fox.posY > 315) ||
+      (fox.posX > 485 && (fox.posX <= 520 && keyCode == LEFT) && fox.posY < 325 && fox.posY > 315) ||
+      (fox.posX > 485 && fox.posX < 515 && (fox.posY <= 330 && keyCode == UP) && fox.posY > 315) ||
+      (fox.posX > 485 && fox.posX < 515 && fox.posY < 325 && (fox.posY >= 310 && keyCode == DOWN))) {
+      // Back lamp boundary
+      fox.stopWalk();
+    } else if (((fox.posX >= 0 && keyCode == RIGHT) && fox.posX < 65 && fox.posY < 505 && fox.posY > 485) ||
+      (fox.posX > 5 && (fox.posX <= 70 && keyCode == LEFT) && fox.posY < 505 && fox.posY > 485) ||
+      (fox.posX > 5 && fox.posX < 65 && (fox.posY <= 510 && keyCode == UP) && fox.posY > 485) ||
+      (fox.posX > 5 && fox.posX < 65 && fox.posY < 505 && (fox.posY >= 480 && keyCode == DOWN))) {
+      // Front lamp boundary
+      fox.stopWalk();
     } else if (((fox.posX >= 915 && keyCode == RIGHT) && fox.posY < 650 && fox.posY > 590) ||
       (fox.posX > 925 && (fox.posY <= 655 && keyCode == UP) && fox.posY > 590) ||
       (fox.posX > 925 && fox.posY < 650 && (fox.posY >= 585 && keyCode == DOWN))) {
